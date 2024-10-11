@@ -1,0 +1,41 @@
+@use '../base/test';
+@use '../core/navi';
+@use 'sass:map';
+
+@function request($source, $entry) {
+  @return navi.join-request($source, $entry);
+}
+
+@function has($source, $entry) {
+  @return navi.join-has($source, $entry);
+}
+
+@function get($source, $entry) {
+  @return navi.join-get($source, $entry);
+}
+
+@function get-strict($name, $source, $entry) {
+  @if not has($source, $entry) {
+    $entry: navi.join($entry);
+
+    @error '#{$entry} is not a valid entry in #{$name}';
+  }
+
+  @return get($source, $entry);
+}
+
+@function maybe-init($name, $source, $value) {
+  @if not test.is-empty($source) {
+    @error '#{$name} already initiated.';
+  }
+
+  @return $value;
+}
+
+@function maybe-set($name, $namespace, $source, $value) {
+  @if map.has-key($source, $namespace) {
+    @error '"#{$namespace}" already added to #{$name}.';
+  }
+
+  @return map.merge($source, $value);
+}

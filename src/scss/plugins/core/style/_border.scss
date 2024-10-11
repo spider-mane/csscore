@@ -1,0 +1,52 @@
+@use '../../../theme/features';
+@use '../../../theme/palette';
+
+@mixin border($args) {
+  border: features.cascade('border', $args);
+}
+
+@mixin border-top($args) {
+  border-top: features.cascade('border', $args);
+}
+
+@mixin border-bottom($args) {
+  border-bottom: features.cascade('border', $args);
+}
+
+@mixin border-left($args) {
+  border-left: features.cascade('border', $args);
+}
+
+@mixin border-right($args) {
+  border-right: features.cascade('border', $args);
+}
+
+@mixin border-color($color, $opacity: 1) {
+  border-color: palette.brush($color, $opacity);
+}
+
+@mixin border-top-color($color, $opacity: 1) {
+  border-top-color: palette.brush($color, $opacity);
+}
+
+@mixin border-bottom-color($color, $opacity: 1) {
+  border-bottom-color: palette.brush($color, $opacity);
+}
+
+@mixin border-left-color($color, $opacity: 1) {
+  border-left-color: palette.brush($color, $opacity);
+}
+
+@mixin border-right-color($color, $opacity: 1) {
+  border-right-color: palette.brush($color, $opacity);
+}
+
+@mixin border-x-color($color, $opacity: 1) {
+  @include border-top-color($color, $opacity);
+  @include border-bottom-color($color, $opacity);
+}
+
+@mixin border-y-color($color, $opacity: 1) {
+  @include border-left-color($color, $opacity);
+  @include border-right-color($color, $opacity);
+}

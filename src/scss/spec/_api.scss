@@ -1,0 +1,37 @@
+@use '../base/test';
+@use '../core/navi';
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:meta';
+
+@function default($map, $caller, $root, $entry) {
+  @each $key, $value in $map {
+    @if list.index($value, default) {
+      @return meta.call($caller, $root, $entry, $key);
+    }
+  }
+}
+
+@function error($api, $value) {
+  @return 'Unable to resolve requested #{$api} value: "#{$value}"';
+}
+
+@function color($colors, $color...) {
+  $color: navi.join($color...);
+  $raw: navi.get($colors, $color);
+  $first: list.nth($raw, 1);
+
+  @if test.is-color($first) {
+    @return $first;
+  }
+
+  @if test.is-string($first) {
+    @return color($colors, $first);
+  }
+
+  @if test.is-map($raw) {
+    @return default($raw, meta.get-function('color'), $colors, $color);
+  }
+
+  @error api-error('color', $color);
+}

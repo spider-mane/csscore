@@ -1,0 +1,25 @@
+@use 'sass:meta';
+
+@mixin configured($animations) {
+  $path: 'node_modules/animate.css/source';
+
+  @each $name, $group in $animations {
+    @each $animation in $group {
+      @include meta.load-css('#{$path}/#{$name}/#{$animation}');
+    }
+  }
+}
+
+@mixin animation(
+  $animation,
+  $duration,
+  $delay: 0,
+  $timing: ease-out,
+  $fill: both
+) {
+  animation-name: $animation;
+  animation-duration: $duration;
+  animation-delay: $delay;
+  animation-timing-function: $timing;
+  animation-fill-mode: $fill;
+}

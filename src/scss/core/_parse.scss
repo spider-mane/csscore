@@ -1,0 +1,122 @@
+@use '../base/lst';
+@use '../base/test';
+@use 'callback';
+@use 'sass:list';
+
+@function transform-item($list, $item, $action) {
+  @return lst.replace($list, $item, callback.actions($item, $action));
+}
+
+@function transform-item-if($list, $item, $test, $action) {
+  @return lst.replace(
+    $list,
+    $item,
+    callback.transform-if($item, $test, $action)
+  );
+}
+
+@function transform-nth($list, $n, $action) {
+  $item: list.nth($list, $n);
+
+  @return list.set-nth($list, $n, callback.actions($item, $action));
+}
+
+@function transform-nth-if($list, $n, $test, $action) {
+  $item: list.nth($list, $n);
+
+  @return list.set-nth($list, $n, callback.transform-if($item, $test, $action));
+}
+
+@function nth-args($list, $n) {
+  @return (list.nth($list, $n), $n, $list);
+}
+
+@function prune-list($list, $test) {
+  $new: lst.inherit($list);
+
+  @each $item in $list {
+    @if callback.tests($item, $test) {
+      $new: list.append($new, $item);
+    }
+  }
+
+  @return $new;
+}
+
+@function prune-list-index($list, $test) {
+  $new: lst.inherit($list);
+
+  @for $i from 1 through list.length($list) {
+    @if callback.tests(nth-args($list, $i), $test) {
+      $new: list.append($new, list.nth($list, $i));
+    }
+  }
+
+  @return $new;
+}
+
+@function walk-list($list, $action) {
+  $new: lst.inherit($list);
+
+  @each $item in $list {
+    $new: callback.actions(($item, $list), $action);
+  }
+
+  @return $new;
+}
+
+@function walk-list-index($list, $action) {
+  @for $i from 1 through list.length($list) {
+    $list: callback.actions(nth-args($list, $i), $action);
+  }
+
+  @return $list;
+}
+
+@function map-list($list, $action) {
+  @each $item in $list {
+    $list: transform-item($list, $item, $action);
+  }
+
+  @return $list;
+}
+
+@function map-list-index($list, $action) {
+  @for $i from 1 through list.length($list) {
+    $list: transform-nth(nth-args($list, $i), $action);
+  }
+
+  @return $list;
+}
+
+@function parse-list($list, $test, $action) {
+  @each $item in $list {
+    $list: transform-item-if($list, $item, $test, $action);
+  }
+
+  @return $list;
+}
+
+@function parse-list-index($list, $test, $action) {
+  @for $i from 1 through list.length($list) {
+    $list: transform-nth-if(nth-args($list, $i), $i, $test, $action);
+  }
+
+  @return $list;
+}
+
+@function parse-color($color, $callback) {
+  @return if(
+    test.is-color($color),
+    $color,
+    callback.actions($color, $callback)
+  );
+}
+
+@function parse-colors($colors, $callback) {
+  @return parse-list(
+    $colors,
+    meta.get-function('is-color') callback.flag('inverse'),
+    $callback
+  );
+}

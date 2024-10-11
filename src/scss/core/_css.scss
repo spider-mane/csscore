@@ -1,0 +1,88 @@
+@use '../base/str';
+@use '../base/test';
+@use 'parse';
+@use 'sass:list';
+@use 'sass:meta';
+@use 'sass:string';
+
+$-CSS_STRINGS: (default, initial, unset, invert);
+
+$-HTML_SPECIAL_CHARS: (
+  '.',
+  ',',
+  ':',
+  '~',
+  '`',
+  '"',
+  "'",
+  ';',
+  '%',
+  '^',
+  '&',
+  '*',
+  '+',
+  '=',
+  '#',
+  '$',
+  '@',
+  '!',
+  '?',
+  '/',
+  '\\',
+  '|',
+  '(',
+  ')',
+  '[',
+  ']',
+  '{',
+  '}',
+  '<',
+  '>'
+);
+
+@function fn($function, $args) {
+  @return string.unquote('#{$function}(#{$args})');
+}
+
+@function maybe-of($of) {
+  @return if(not test.is-null($of), 'of #{$of}', '');
+}
+
+@function strip-class($selector) {
+  @return str.trim-start($selector, '.');
+}
+
+@function esc-special($string) {
+  @return str.escape($string, $-HTML_SPECIAL_CHARS...);
+}
+
+@function set-split($set) {
+  @return string.split($set, ' ');
+}
+
+@function batch-split($batch) {
+  @return string.split($batch, ',');
+}
+
+@function is-css-string($value) {
+  @return not test.is-null(list.index($-CSS_STRINGS, $value));
+}
+
+@function is-css-val($value) {
+  @return test.is-number($value) or test.is-color($value) or
+    test.is-calculation($value) or is-css-string($value);
+}
+
+@function is-shorthand-val($value) {
+  @return test.is-number($value) or test.is-string($value) or
+    test.is-color($value) or test.is-calculation($value);
+}
+
+@function parse-shorthand($values, $callback) {
+  @return parse.parse-list(
+    $values,
+    // meta.get-function('is-shorthand-val') flag('inverse'),
+    meta.get-function('is-list', $module: 'test'),
+    $callback
+  );
+}

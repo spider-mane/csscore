@@ -1,0 +1,33 @@
+$config: (
+  '%var': (
+    'what':
+      'assign entries to hoist as css var and transform value to var reference',
+    'how': (
+      'keyword:all': all,
+      'keyword:none': none,
+      'list': (
+        'entry',
+        'entry',
+        'nested.entry',
+        'entry',
+      ),
+    ),
+  ),
+
+  '%default': (
+    'what': 'assign default key to use on current map',
+    'how': (
+      'keyword:none': none,
+      'string': 'entry',
+    ),
+  ),
+
+  '%prefer': (
+    'what': 'assign key as default on all directly nested maps',
+    'how': (
+      'string': 'key',
+    ),
+  ),
+
+  '%override': (),
+);

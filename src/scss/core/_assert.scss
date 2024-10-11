@@ -1,0 +1,20 @@
+@use 'sass:list';
+@use 'sass:meta';
+
+@function args($function, $values) {
+  @each $name, $args in $values {
+    $function: list.nth($args, 1);
+    $value: list.nth($args, 2);
+
+    $valid: meta.call(meta.get-function($function), $value);
+
+    @if not $valid {
+      $type: meta.type-of($value);
+      $value: meta.inspect($value);
+
+      @error "Invalid value type of '#{$type}' passed to function '#{$function}' parameter '$#{$name}'. (Value: #{$value})";
+    }
+  }
+
+  @return true;
+}

@@ -1,0 +1,30 @@
+@use 'policy';
+
+// policy
+$policy: policy.$config !default;
+
+// foundation
+$foundation: () !default;
+
+// context
+$view: () !default;
+$states: () !default;
+
+// tokens
+$assets: () !default;
+$vendors: () !default;
+$palette: () !default;
+$blueprint: () !default;
+$typography: () !default;
+$features: () !default;
+$variables: () !default;
+
+// elements
+$reset: () !default;
+$base: () !default;
+$components: () !default;
+$layouts: () !default;
+$sections: () !default;
+
+// extra
+$extra: () !default;

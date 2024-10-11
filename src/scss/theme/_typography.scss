@@ -1,0 +1,5 @@
+@use 'access';
+
+@function type-size($size) {
+  @return access.typography('scale', $size);
+}

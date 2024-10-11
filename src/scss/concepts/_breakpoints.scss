@@ -1,0 +1,28 @@
+@use 'sass:map';
+
+$bootstrap: (
+  'xs': 0,
+  'sm': 576px,
+  'md': 768px,
+  'lg': 992px,
+  'xl': 1200px,
+  '2xl': 1400px,
+);
+
+$tailwind: (
+  'xs': 0,
+  'sm': 640px,
+  'md': 768px,
+  'lg': 1024px,
+  'xl': 1280px,
+  '2xl': 1536px,
+);
+
+$map: (
+  'bootstrap': $bootstrap,
+  'tailwind': $tailwind,
+);
+
+@function preset($source) {
+  @return map.get($map, $source);
+}

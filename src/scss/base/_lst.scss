@@ -1,0 +1,115 @@
+@use 'test';
+@use 'sass:list';
+@use 'sass:meta';
+
+@function pack($args...) {
+  @return $args;
+}
+
+@function is-empty($list) {
+  @return 0 == list.length($list);
+}
+
+@function has($list, $value) {
+  @return not test.is-null(list.index($list, $value));
+}
+
+@function make($separator: auto, $bracketed: auto) {
+  @return list.join((), (), $separator, $bracketed);
+}
+
+@function inherit($original, $clone: ()) {
+  @return list.join(
+    (),
+    $clone,
+    list.separator($original),
+    list.is-bracketed($original)
+  );
+}
+
+@function replace($list, $old, $new) {
+  @return list.set-nth($list, list.index($list, $old), $new);
+}
+
+@function replace-all($list, $old, $new) {
+  @while (has($list, $old)) {
+    $list: replace($list, $old, $new);
+  }
+
+  @return $list;
+}
+
+@function resolve-nth($list, $n) {
+  @return if($n > 0, $n, list.length($list) + $n + 1);
+}
+
+@function trim($list, $start, $end: -1) {
+  $new: inherit($list);
+
+  @for $i from resolve-nth($list, $start) through resolve-nth($list, $end) {
+    $new: list.append($new, list.nth($list, $i));
+  }
+
+  @return $new;
+}
+
+@function from-start($list, $count) {
+  @return trim($list, 1, $count);
+}
+
+@function from-end($list, $count) {
+  @return trim($list, $count, -1);
+}
+
+@function without($list, $value) {
+  $new: inherit($list);
+
+  @each $item in $list {
+    @if $item != $value {
+      $new: list.append($new, $item);
+    }
+  }
+
+  @return $new;
+}
+
+@function without-nth($list, $n) {
+  $new: inherit($list);
+  $n: resolve-nth($list, $n);
+
+  @for $i from 1 through list.length($list) {
+    @if $i != $n {
+      $new: list.append($new, list.nth($list, $i));
+    }
+  }
+
+  @return $new;
+}
+
+@function unique($list) {
+  $new: inherit($list);
+
+  @each $item in $list {
+    @if not has($new, $item) {
+      $new: list.append($new, $item);
+    }
+  }
+
+  @return $new;
+}
+
+@function operate($list, $action, $extra...) {
+  @each $item in $list {
+    $list: replace($list, $item, meta.call($action, $item, $extra...));
+  }
+}
+
+@function maybe-operate($list, $test, $action, $extra...) {
+  @each $item in $list {
+    @if meta.call($test, $item) {
+      $list: replace($list, $item, meta.call($action, $item, $extra...));
+    }
+  }
+
+  @return $list;
+}

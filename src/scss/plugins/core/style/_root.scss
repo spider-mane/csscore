@@ -1,0 +1,5 @@
+@use '../../../theme/access';
+
+@mixin root-size($size) {
+  font-size: access.blueprint('root', $size);
+}

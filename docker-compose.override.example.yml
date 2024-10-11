@@ -1,0 +1,57 @@
+name: csscore
+
+services:
+  app:
+    build:
+      target: app-interactive
+      args:
+        LANG: '${LANG:-en_US.UTF-8}'
+        TZ: 'America/New_York'
+        UNMINIMIZE: yes
+        USER: '${USER}'
+        GIT_USER: ''
+        GIT_EMAIL: ''
+        GIT_DEFAULT_BRANCH: 'master'
+        GIT_INSTALL_GCM: yes
+    healthcheck:
+      interval: 2s
+      timeout: 2s
+      start_period: 10s
+      # retries: 5
+    ports:
+      - '${BROWSERSYNC_PORT:-3000}:${BROWSERSYNC_PORT:-3000}'
+      - '${BROWSERSYNC_UI_PORT:-3001}:${BROWSERSYNC_UI_PORT:-3001}'
+    environment:
+      TERM: '${TERM}'
+      ZSH_THEME: 'powerlevel10k/powerlevel10k'
+    volumes:
+      # Source
+      - '.:/var/www/html'
+      # Misc
+      - 'vscode:/home/csscore/.vscode-server'
+
+  server:
+    networks:
+      - nginx-proxy
+    environment:
+      TERM: '${TERM}'
+    volumes:
+      - '.:/var/www/html:ro'
+
+  cache:
+    ports:
+      - '${CACHE_FORWARD_PORT:-6379}:6379'
+    environment:
+      TERM: '${TERM}'
+
+  browser:
+    environment:
+      TERM: '${TERM}'
+
+networks:
+  nginx-proxy:
+    external: true
+
+volumes:
+  vscode:
+    driver: local

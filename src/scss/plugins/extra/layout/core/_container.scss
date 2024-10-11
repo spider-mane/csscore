@@ -1,0 +1,10 @@
+@use '../../../../css/size';
+@use '../../../core/view/bp';
+
+@mixin container-definition($container) {
+  @each $breakpoint, $width in $container {
+    @include bp.min($breakpoint) {
+      @include size.maximized-width($width);
+    }
+  }
+}

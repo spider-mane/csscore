@@ -1,0 +1,56 @@
+@use '../../../base/test';
+@use '../../../theme/access';
+@use '../../../theme/palette';
+@use 'sass:map';
+
+$-var-namespace: null;
+$-parsed-vars: ();
+
+@function -resolve-namespace() {
+  $variables: access.variables();
+  $namespace: map.get($variables, 'namespace');
+
+  @if not test.is-empty($namespace) {
+    $namespace: $namespace + map.get($variables, 'delimiter');
+  }
+
+  @return $namespace;
+}
+
+@function -init() {
+  @return -resolve-namespace();
+}
+
+@function namespace() {
+  @if not $-var-namespace {
+    $-var-namespace: -resolve-namespace() !global;
+  }
+
+  @return $-var-namespace;
+}
+
+@function variable($name) {
+  @return #{'--' + namespace() + $name};
+}
+
+@function use($var) {
+  @return var(variable($var));
+}
+
+@mixin var($name, $value) {
+  #{variable($name)}: palette.parse-entries($value);
+}
+
+@mixin vars($vars) {
+  @each $name, $value in $vars {
+    @include var($name, $value);
+  }
+}
+
+@mixin init-vars() {
+  $-var-namespace: -init() !global;
+}
+
+@mixin theme-variables() {
+  @include vars(map.get(access.variables(), 'set'));
+}

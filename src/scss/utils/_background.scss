@@ -1,0 +1,32 @@
+@use '../core/parse';
+@use '../css/backdrop';
+@use 'sass:list';
+@use 'sass:meta';
+
+@function color-layer($color) {
+  @return linear-gradient($color, $color);
+}
+
+@function layer-colors($colors...) {
+  @return parse.map-list($colors, meta.get-function('color-layer'));
+}
+
+@mixin overlay($color, $opacity, $blur: null) {
+  background-color: rgba($color, $opacity);
+
+  @if $blur {
+    @include backdrop.bdf-blur($blur);
+  }
+}
+
+@mixin color-layers($base, $layers...) {
+  background-color: $base;
+  background-image: layer-colors($layers...);
+}
+
+@mixin color-layers-parsed($callback, $base, $layers...) {
+  @include color-layers(
+    parse.parse-color($base, $callback),
+    parse.parse-colors($layers, $callback)...
+  );
+}

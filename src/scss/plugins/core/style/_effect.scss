@@ -1,0 +1,18 @@
+@use '../../../theme/access';
+@use '../../../theme/features';
+
+@mixin opacity($value) {
+  opacity: access.features('opacity', $value);
+}
+
+@mixin text-shadow($args) {
+  text-shadow: features.cascade('text-shadow', $args);
+}
+
+@mixin box-shadow($args) {
+  box-shadow: features.cascade('shadow', $args);
+}
+
+@mixin drop-shadow($args) {
+  filter: drop-shadow(features.cascade('shadow', $args));
+}

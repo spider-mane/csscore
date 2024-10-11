@@ -1,0 +1,7 @@
+@use '../../../base/str';
+@use '../../../core/navi';
+@use 'output';
+
+@mixin as-variant($variant...) {
+  @extend %#{str.replace(navi.join($variant...), '.', '-')};
+}

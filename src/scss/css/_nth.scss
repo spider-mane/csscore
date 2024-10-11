@@ -1,0 +1,106 @@
+@use '../core/css';
+@use '../helpers';
+
+@mixin incremented-nths($start, $count, $value, $increment, $of: null) {
+  $template: '#{&}:nth-child(n + $i #{css.maybe-of($of)})';
+
+  @include helpers.incremented-selectors(
+      $template,
+      $start,
+      $count,
+      $value,
+      $increment
+    )
+    using ($value, $i) {
+    @content ($value, $i);
+  }
+}
+
+@mixin incremented-type-nths($start, $count, $value, $increment) {
+  $template: '#{&}:nth-of-type(n + $i)';
+
+  @include helpers.incremented-selectors(
+      $template,
+      $start,
+      $count,
+      $value,
+      $increment
+    )
+    using ($value, $i) {
+    @content ($value, $i);
+  }
+}
+
+@mixin incremented-nths-r($start, $count, $value, $increment, $of: null) {
+  $template: '#{&}:nth-last-child(n + $i #{css.maybe-of($of)})';
+
+  @include helpers.incremented-selectors(
+      $template,
+      $start,
+      $count,
+      $value,
+      $increment
+    )
+    using ($value, $i) {
+    @content ($value, $i);
+  }
+}
+
+@mixin incremented-type-nths-r($start, $count, $value, $increment) {
+  $template: '#{&}:nth-last-of-type(n + $i)';
+
+  @include helpers.incremented-selectors(
+      $template,
+      $start,
+      $count,
+      $value,
+      $increment
+    )
+    using ($value, $i) {
+    @content ($value, $i);
+  }
+}
+
+@mixin first-half-of-nth($count, $max: true) {
+  $add: 0;
+
+  @if $max {
+    &:first-child:last-child {
+      @content;
+    }
+  } @else {
+    $add: 1;
+
+    &:nth-child(-n + 1):nth-last-child(n + 2) {
+      @content;
+    }
+  }
+
+  @for $i from 2 through $count {
+    &:nth-child(-n + #{$i}):nth-last-child(n + #{$i + $add}) {
+      @content;
+    }
+  }
+}
+
+@mixin second-half-of-nth($count, $max: true) {
+  $add: 0;
+
+  @if $max {
+    &:first-child:last-child {
+      @content;
+    }
+  } @else {
+    $add: 1;
+
+    &:nth-child(n + 2):last-child {
+      @content;
+    }
+  }
+
+  @for $i from 2 through $count {
+    &:nth-child(n + #{$i + $add}):nth-last-child(-n + #{$i}) {
+      @content;
+    }
+  }
+}

@@ -1,0 +1,47 @@
+/// Makes pseudo elements appear on the page. It's magic!
+@mixin sudo() {
+  content: '';
+}
+
+@mixin before() {
+  &::before {
+    @include sudo();
+
+    @content;
+  }
+}
+
+@mixin after() {
+  &::after {
+    @include sudo();
+
+    @content;
+  }
+}
+
+@mixin ends() {
+  &::before,
+  &::after {
+    @include sudo();
+
+    @content;
+  }
+}
+
+@mixin with-ends($selector) {
+  #{$selector},
+  #{$selector}::before,
+  #{$selector}::after {
+    @content;
+  }
+}
+
+@mixin element($end) {
+  &#{'::#{$end}'} {
+    @if 'before' == $end or 'after' == $end {
+      @include sudo();
+    }
+
+    @content;
+  }
+}

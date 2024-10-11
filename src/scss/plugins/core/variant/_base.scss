@@ -1,0 +1,69 @@
+@use '../../../services/variant';
+@use '../../../base/slctr';
+@use '../../../core/css';
+@use '../../../core/navi';
+@use '../../../theme/access';
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:meta';
+
+@function value($variant...) {
+  $variations: '#variations';
+  $apply: '#apply';
+  $map: '#map';
+
+  $parts: navi.split($variant...);
+  $component: list.nth($parts, 1);
+  $variation: list.nth($parts, 2);
+  $variant: list.nth($parts, 3);
+  $property: list.nth($parts, 4);
+
+  $context: access.components($component, $variations, $variation);
+
+  $function: map.get($context, $apply, $property);
+  $input: map.get($context, $map, $variant);
+
+  @return meta.call($function, $input...);
+}
+
+@function vv($variant...) {
+  @return value($variant...);
+}
+
+@mixin config($component, $variant) {
+  $base: '#variations';
+  $config: access.components($component, $base, $variant);
+  $keys: access.policy('component.variant');
+
+  @content ($config, $keys);
+}
+
+@mixin configured($component, $variant, $name) {
+  @include config($component, $variant) using ($config, $keys) {
+    @include variant.definition($name, $config, $keys);
+  }
+}
+
+@mixin variant($variant...) {
+  @include configured(navi.split($variant...)...);
+}
+
+@mixin configured-placeholders($component, $variant) {
+  @include config($component, $variant) using ($config, $keys) {
+    @include variant.placeholders($component, $variant, $config, $keys);
+  }
+}
+
+@mixin all-configured-placeholders() {
+  $components: access.components();
+  $keys: access.policy('component.variant');
+
+  @include variant.all-placeholders($components, $keys);
+}
+
+@mixin variations($variations...) {
+  $component: css.strip-class(slctr.leading-selector());
+  $variations: meta.keywords($variations);
+
+  $config: access.components($component, '#variations');
+}

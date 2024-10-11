@@ -1,0 +1,25 @@
+@use 'sass:color';
+
+@function channel($channel, $color) {
+  @return color.channel($color, $channel, rgb);
+}
+
+@function red($color) {
+  @return channel('red', $color);
+}
+
+@function green($color) {
+  @return channel('green', $color);
+}
+
+@function blue($color) {
+  @return channel('blue', $color);
+}
+
+@function alpha($color) {
+  @return channel('alpha', $color);
+}
+
+@function from($color) {
+  @return red($color), green($color), blue($color), alpha($color);
+}

@@ -1,0 +1,11 @@
+@use 'sass:map';
+
+@function make($pairs...) {
+  $map: ();
+
+  @each $key, $value in $pairs {
+    $map: map.set($map, $key, $value);
+  }
+
+  @return $map;
+}

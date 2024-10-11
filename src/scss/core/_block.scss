@@ -1,0 +1,64 @@
+@use 'navi';
+@use 'sass:list';
+@use 'sass:meta';
+@use 'sass:string';
+
+@function generate-layer($layer, $format: 'config') {
+  $args: string.split($layer, '.', 1);
+  $generator: meta.get-function('generate-#{$format}-layer');
+
+  @return meta.call($generator, $args...);
+}
+
+@function generate-option($option, $generator) {
+  $args: string.split(navi.join($option...), '.', 2);
+
+  @return meta.call($generator, $args...);
+}
+
+@function class-option($option, $format: 'config') {
+  @return generate-option(
+    $option,
+    meta.get-function('generate-#{$format}-class-option')
+  );
+}
+
+@function data-option($option) {
+  @return generate-option($option, meta.get-function('generate-data-option'));
+}
+
+// utils
+
+@function no-bool($value, $output) {
+  @return if('true' == $value, '', $output);
+}
+
+// formats
+
+@function generate-data-option($system, $feature, $value) {
+  @return [data-#{$system}-#{$feature}#{'='}#{$value}];
+}
+
+@function generate-config-layer($component, $layer) {
+  @return #{'.'}#{$component}\:#{$layer};
+}
+
+@function generate-config-class-option($system, $feature, $value) {
+  @return #{'.'}#{$system}\:#{$feature}\=#{$value};
+}
+
+@function generate-dash-layer($component, $layer) {
+  @return #{'.'}#{$component}-#{$layer};
+}
+
+@function generate-dash-class-option($layer, $feature, $value) {
+  @return #{'.'}#{$layer}-#{$feature}#{no-bool($value, '-#{$value}')};
+}
+
+@function generate-bem-layer($component, $layer) {
+  @return #{'.'}#{$component}__#{$layer};
+}
+
+@function generate-bem-class-option($layer, $feature, $value) {
+  @return #{'.'}#{$layer}--#{$feature}#{no-bool($value, '-#{$value}')};
+}

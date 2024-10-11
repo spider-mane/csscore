@@ -1,0 +1,49 @@
+@use 'access';
+
+@function asset($asset) {
+  $path: access.assets('local.root');
+
+  @return url('#{$path}/#{$asset}');
+}
+
+@function font($font) {
+  $path: access.assets('fonts');
+
+  @return asset('#{$path}/#{$font}');
+}
+
+@function image($image) {
+  $path: access.assets('images');
+
+  @return asset('#{$path}/#{$image}');
+}
+
+@function icon($icon) {
+  $path: access.assets('icons');
+
+  @return asset('#{$path}/#{$icon}');
+}
+
+@function logo($logo) {
+  $path: access.assets('logos');
+
+  @return asset('#{$path}/#{$logo}');
+}
+
+@function svg($svg) {
+  $path: access.assets('svg');
+
+  @return asset('#{$path}/#{$svg}');
+}
+
+@function video($video) {
+  $path: access.assets('videos');
+
+  @return asset('#{$path}/#{$video}');
+}
+
+@function audio($audio) {
+  $path: access.assets('audio');
+
+  @return asset('#{$path}/#{$audio}');
+}

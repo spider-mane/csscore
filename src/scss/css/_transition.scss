@@ -1,0 +1,5 @@
+@use '../helpers';
+
+@mixin props($properties) {
+  @include helpers.property-group(transition, $properties);
+}

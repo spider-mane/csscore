@@ -1,0 +1,5 @@
+@use 'calc';
+
+@function units-of($var, $units: 100) {
+  @return calc.units-of(var($var), $units);
+}

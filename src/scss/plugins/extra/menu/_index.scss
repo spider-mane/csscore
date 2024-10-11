@@ -1,0 +1,27 @@
+@use '../../../css/position';
+@use '../../../utils/placement';
+@use '../../core/block';
+
+@mixin nested-menu-toggle($toggle) {
+  @include placement.hide-visually($toggle);
+
+  opacity: 0;
+
+  @if ('unhide' == $toggle) {
+    @include position.anchor-bottom();
+
+    opacity: 1;
+  }
+}
+
+@mixin has-active-submenu($selector, $data: 'nav.active.true') {
+  @include block.has-with-data-option($data, $selector) {
+    @content;
+  }
+}
+
+@mixin is-active-menu($data: 'nav.active.true') {
+  @include block.data-option($data) {
+    @content;
+  }
+}

@@ -1,0 +1,5 @@
+@use 'sass:color';
+
+@function channel($channel, $color) {
+  @return color.channel($color, $channel, lab);
+}

@@ -1,0 +1,10 @@
+@mixin anchor() {
+  text-decoration: none;
+  color: inherit;
+}
+
+@mixin button() {
+  background-color: initial;
+  border: none;
+  line-height: 1;
+}

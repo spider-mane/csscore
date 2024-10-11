@@ -1,0 +1,12 @@
+// For format details, see https://aka.ms/devcontainer.json.
+{
+  "name": "csscore",
+  "dockerComposeFile": [
+    "../docker-compose.yml",
+    "../docker-compose.override.yml"
+  ],
+  "service": "app",
+  "remoteUser": "csscore",
+  "workspaceFolder": "/var/www/html",
+  "shutdownAction": "none"
+}

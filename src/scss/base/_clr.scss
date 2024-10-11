@@ -1,0 +1,5 @@
+@use 'sass:color';
+
+@function set-alpha($color, $alpha) {
+  @return color.change($color, $alpha: $alpha, $space: color.space($color));
+}

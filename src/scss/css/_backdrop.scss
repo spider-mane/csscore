@@ -1,0 +1,17 @@
+@mixin filters($filters) {
+  $value: '';
+
+  @each $filter, $arg in $filters {
+    $value: $value + ' #{$filter}(#{$arg})';
+  }
+
+  backdrop-filter: #{$value};
+}
+
+@mixin blur($val) {
+  backdrop-filter: blur($val);
+}
+
+@mixin invert($invert) {
+  backdrop-filter: invert($val);
+}

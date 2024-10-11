@@ -1,0 +1,107 @@
+@use 'data';
+@use 'sass:map';
+@use 'sass:meta';
+
+@forward 'data';
+
+$map: meta.module-variables('data');
+
+@function preset($name) {
+  @return map.get($map, $name);
+}
+
+@function ease-in-sine() {
+  @return data.$ease-in-sine;
+}
+
+@function ease-out-sine() {
+  @return data.$ease-out-sine;
+}
+
+@function ease-in-out-sine() {
+  @return data.$ease-in-out-sine;
+}
+
+@function ease-in-quad() {
+  @return data.$ease-in-quad;
+}
+
+@function ease-out-quad() {
+  @return data.$ease-out-quad;
+}
+
+@function ease-in-out-quad() {
+  @return data.$ease-in-out-quad;
+}
+
+@function ease-in-cubic() {
+  @return data.$ease-in-cubic;
+}
+
+@function ease-out-cubic() {
+  @return data.$ease-out-cubic;
+}
+
+@function ease-in-out-cubic() {
+  @return data.$ease-in-out-cubic;
+}
+
+@function ease-in-quart() {
+  @return data.$ease-in-quart;
+}
+
+@function ease-out-quart() {
+  @return data.$ease-out-quart;
+}
+
+@function ease-in-out-quart() {
+  @return data.$ease-in-out-quart;
+}
+
+@function ease-in-quint() {
+  @return data.$ease-in-quint;
+}
+
+@function ease-out-quint() {
+  @return data.$ease-out-quint;
+}
+
+@function ease-in-out-quint() {
+  @return data.$ease-in-out-quint;
+}
+
+@function ease-in-expo() {
+  @return data.$ease-in-expo;
+}
+
+@function ease-out-expo() {
+  @return data.$ease-out-expo;
+}
+
+@function ease-in-out-expo() {
+  @return data.$ease-in-out-expo;
+}
+
+@function ease-in-circ() {
+  @return data.$ease-in-circ;
+}
+
+@function ease-out-circ() {
+  @return data.$ease-out-circ;
+}
+
+@function ease-in-out-circ() {
+  @return data.$ease-in-out-circ;
+}
+
+@function ease-in-back() {
+  @return data.$ease-in-back;
+}
+
+@function ease-out-back() {
+  @return data.$ease-out-back;
+}
+
+@function ease-in-out-back() {
+  @return data.$ease-in-out-back;
+}

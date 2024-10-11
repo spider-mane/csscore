@@ -1,0 +1,83 @@
+@mixin x($value) {
+  margin-left: $value;
+  margin-right: $value;
+}
+
+@mixin y($value) {
+  margin-top: $value;
+  margin-bottom: $value;
+}
+
+@mixin pull-left($value) {
+  margin-left: -($value);
+  margin-right: 0;
+}
+
+@mixin pull-right($value) {
+  margin-right: -($value);
+  margin-left: 0;
+}
+
+@mixin pull-up($value) {
+  margin-top: -($value);
+  margin-bottom: 0;
+}
+
+@mixin pull-down($value) {
+  margin-bottom: -($value);
+  margin-top: 0;
+}
+
+@mixin offset-left($value) {
+  padding-left: $value;
+  margin-right: $value;
+}
+
+@mixin offset-right($value) {
+  padding-right: $value;
+  margin-left: $value;
+}
+
+@mixin offset-top($value) {
+  padding-top: $value;
+  margin-bottom: $value;
+}
+
+@mixin offset-bottom($value) {
+  padding-bottom: $value;
+  margin-top: $value;
+}
+
+@mixin offset-horizontal($left, $right) {
+  @include offset-left($left);
+  @include offset-right($right);
+}
+
+@mixin offset-vertical($top, $bottom) {
+  @include offset-top($top);
+  @include offset-bottom($right);
+}
+
+@mixin balance($what, $where, $who: '> :only-child') {
+  margin-#{$where}: $what;
+
+  #{$who} {
+    margin-#{$where}: -$what;
+  }
+}
+
+@mixin balance-top($margin, $counter: '> :only-child') {
+  @include balance($margin, top, $counter);
+}
+
+@mixin balance-bottom($margin, $counter: '> :only-child') {
+  @include balance($margin, bottom, $counter);
+}
+
+@mixin balance-left($margin, $counter: '> :only-child') {
+  @include balance($margin, left, $counter);
+}
+
+@mixin balance-right($margin, $counter: '> :only-child') {
+  @include balance($margin, right, $counter);
+}

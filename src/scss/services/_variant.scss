@@ -1,0 +1,91 @@
+@use '../base/test';
+@use '../core/callback';
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:meta';
+
+@mixin definition($name, $config, $keys) {
+  $apply: map.get($config, map.get($keys, 'apply'));
+  $args: map.get($config, map.get($keys, 'args'));
+  $styles: map.get($config, map.get($keys, 'style'));
+
+  @if $apply {
+    @each $property, $value in $apply {
+      $provisions: map.get($args, $name);
+
+      @if test.is_map($provisions) {
+        $provisions: map.get($provisions, $property);
+      }
+
+      @if test.is-mixin($value) {
+        @include meta.apply($value, $provisions...);
+      } @else if test.is-function($value) {
+        #{$property}: meta.call($value, $provisions...);
+      }
+    }
+  }
+
+  @if $styles {
+    $set: map.get($styles, $name);
+
+    @each $property, $value in $set {
+      #{$property}: #{$value};
+    }
+  }
+}
+
+@mixin placeholders($component, $variant, $config, $keys, $prefix: '') {
+  $definitions: map.get($config, map.get($keys, 'definitions'));
+
+  @each $name in $definitions {
+    %#{$prefix}#{$component}-#{$variant}-#{$name} {
+      @include definition($name, $config, $keys);
+    }
+  }
+}
+
+@mixin all-placeholders($components, $keys, $prefix: '') {
+  @each $component, $config in $components {
+    $key: map.get($keys, 'base');
+
+    @if map.has-key($config, $key) {
+      @each $variant, $values in map.get($config, $key) {
+        @include placeholders($component, $variant, $values, $keys, $prefix);
+      }
+    }
+  }
+}
+
+@mixin incremented($property, $function, $i: 1, $increments...) {
+  @each $increment in $increments {
+    $value: meta.call($function, $i);
+
+    &#{&}-#{$increment} {
+      #{$property}: #{$value};
+    }
+
+    $i: $i + 1;
+  }
+}
+
+@mixin common-property($property, $value, $selectors) {
+  @each $selector in $selectors {
+    #{$selector} {
+      #{$property}: #{callback.resolve-invocable($value, $selector, $property)};
+    }
+  }
+}
+
+@mixin common-properties($properties, $selectors) {
+  @each $selector in $selectors {
+    #{$selector} {
+      @each $property, $value in $properties {
+        #{$property}: #{callback.resolve-invocable(
+            $value,
+            $selector,
+            $property
+          )};
+      }
+    }
+  }
+}

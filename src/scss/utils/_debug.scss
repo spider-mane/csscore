@@ -1,0 +1,25 @@
+@use 'sass:meta';
+@use 'sass:math';
+
+@mixin debug($value) {
+  @at-root :root:before {
+    content: '#{meta.inspect($value)}';
+
+    position: fixed;
+    z-index: math.$max-safe-integer;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    font-size: 24px;
+
+    padding: 15px 10px;
+
+    color: black;
+    background-color: white;
+  }
+}
+
+@mixin debug-outline() {
+  border: 1px solid red;
+}

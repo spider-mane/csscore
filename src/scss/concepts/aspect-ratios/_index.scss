@@ -1,0 +1,39 @@
+@use 'data';
+@use 'sass:map';
+@use 'sass:meta';
+
+@forward 'data';
+
+$map: meta.module-variables('data');
+
+@function preset($name) {
+  @return map.get($map, $name);
+}
+
+@mixin square() {
+  aspect-ratio: data.$square;
+}
+
+@mixin half() {
+  aspect-ratio: data.$half;
+}
+
+@mixin double() {
+  aspect-ratio: data.$double;
+}
+
+@mixin hd() {
+  aspect-ratio: data.$hd;
+}
+
+@mixin sd() {
+  aspect-ratio: data.$sd;
+}
+
+@mixin flat() {
+  aspect-ratio: data.$flat;
+}
+
+@mixin cinema() {
+  aspect-ratio: data.$cinema;
+}

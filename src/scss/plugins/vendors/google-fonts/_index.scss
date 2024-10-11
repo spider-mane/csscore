@@ -1,0 +1,11 @@
+@mixin selection($selection, $display: 'swap') {
+  $url: '//fonts.googleapis.com/css2';
+
+  $collection: '';
+
+  @each $family in $selection {
+    $collection: $collection + '&family=#{$family}';
+  }
+
+  @import url('#{$url}?#{$collection}&display=#{$display}');
+}

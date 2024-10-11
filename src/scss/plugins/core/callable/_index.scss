@@ -1,0 +1,56 @@
+@use '../../../base/test';
+@use '../../../proto/data';
+@use '../../../theme/access';
+@use 'sass:map';
+
+$-functions: ();
+$-mixins: ();
+$-closures: ();
+
+@function -functions() {
+  @return map.merge($-functions, access.foundation('functions'));
+}
+
+@function -mixins() {
+  @return map.merge($-functions, access.foundation('mixins'));
+}
+
+@function -closures() {
+  @return map.merge($-functions, access.foundation('closures'));
+}
+
+@function function($name) {
+  @return data.get-strict('functions', -functions(), $name);
+}
+
+@function mixin($name) {
+  @return data.get-strict('mixins', -mixins(), $name);
+}
+
+@function closure($name) {
+  @return data.get-strict('closures', -closures(), $name);
+}
+
+@mixin add-function($function, $alias) {
+  @if not test.is-function($function) {
+    @error 'Value must be a function.';
+  }
+
+  $-functions: data.maybe-set('functions', $alias, $-functions, $function);
+}
+
+@mixin add-mixin($mixin, $alias) {
+  @if not test.is-mixin($mixin) {
+    @error 'Value must be a mixin.';
+  }
+
+  $-mixins: data.maybe-set('mixins', $alias, $-mixins, $mixin);
+}
+
+@mixin add-closure($closure, $alias) {
+  @if not is-closure($closure) {
+    @error 'Value must be a closure.';
+  }
+
+  $-closures: data.maybe-set('closures', $alias, $-closures, $closure);
+}

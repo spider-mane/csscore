@@ -1,0 +1,22 @@
+@use '../css/flex';
+@use '../css/margin';
+@use '../css/size';
+
+@mixin container($width: 100%, $height: 100%) {
+  @include margin.x(auto);
+  @include size.maximized-width($width);
+  @include size.minimized-height($height);
+}
+
+@mixin flex-layout($height: null) {
+  @include flex.column($align: center);
+  @include size.minimized-height($height);
+
+  max-width: 100%;
+}
+
+@mixin flex-container($width: null) {
+  @include flex.column();
+  @include flex.fit();
+  @include container($width);
+}

@@ -1,0 +1,47 @@
+@use '../../../theme/access';
+@use '../../../theme/features';
+@use '../../../theme/palette';
+
+@function parse-linear-gradient($args...) {
+  @return linear-gradient(
+    features.cascade-loop('gradient.linear', $args...)...
+  );
+}
+
+@function parse-radial-gradient($args...) {
+  @return radial-gradient(
+    features.cascade-loop('gradient.radial', $args...)...
+  );
+}
+
+@function parse-conic-gradient($args...) {
+  @return conic-gradient(features.cascade-loop('gradient.conic', $args...)...);
+}
+
+@mixin background($args...) {
+  background: features.cascade-loop('background', $args...);
+}
+
+@mixin all($args...) {
+  @include background($args...);
+}
+
+@mixin color($color, $opacity: 1) {
+  background-color: palette.brush($color, $opacity);
+}
+
+@mixin linear-gradient($args...) {
+  background-image: parse-linear-gradient($args...);
+}
+
+@mixin radial-gradient($args...) {
+  background-image: parse-radial-gradient($args...);
+}
+
+@mixin conic-gradient($args...) {
+  background-image: parse-conic-gradient($args...);
+}
+
+@mixin gradient($name) {
+  background-image: access.features('gradient', $name);
+}

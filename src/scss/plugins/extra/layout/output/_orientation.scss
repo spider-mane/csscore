@@ -1,0 +1,107 @@
+@use '../core/orientation' as *;
+
+// Row
+%orientation-row {
+  @include row();
+}
+
+%orientation-row-reverse {
+  @include row-reverse();
+}
+
+// Column
+%orientation-column {
+  @include column();
+}
+
+%orientation-column-flip {
+  @include column-flip();
+}
+
+// Column
+%orientation-column-bottom {
+  @include column-bottom();
+}
+
+%orientation-column-bottom-flip {
+  @include column-bottom-flip();
+}
+
+// Box (Top)
+%orientation-box-top {
+  @include box-top();
+}
+
+%orientation-box-top-reverse {
+  @include box-top-reverse();
+}
+
+%orientation-box-top-flip {
+  @include box-top-flip();
+}
+
+// Box (Bottom)
+%orientation-box-bottom {
+  @include box-bottom();
+}
+
+%orientation-box-bottom-reverse {
+  @include box-bottom-reverse();
+}
+
+%orientation-box-bottom-flip {
+  @include box-bottom-flip();
+}
+
+// Mount
+%orientation-mount {
+  @include mount();
+}
+
+%orientation-mount-reverse {
+  @include mount-reverse();
+}
+
+// Carrier (Top)
+%orientation-carrier-top {
+  @include carrier-top();
+}
+
+%orientation-carrier-top-reverse {
+  @include carrier-top-reverse();
+}
+
+%orientation-carrier-top-flip {
+  @include carrier-top-flip();
+}
+
+// Carrier (Bottom)
+%orientation-carrier-bottom {
+  @include carrier-bottom();
+}
+
+%orientation-carrier-bottom-reverse {
+  @include carrier-bottom-reverse();
+}
+
+%orientation-carrier-bottom-flip {
+  @include carrier-bottom-flip();
+}
+
+// Block
+%orientation-block {
+  @include block();
+}
+
+%orientation-block-switch {
+  @include block-switch();
+}
+
+// Title
+%orientation-title {
+  @include title();
+}
+
+%orientation-title-reverse {
+  @include title-reverse();
+}

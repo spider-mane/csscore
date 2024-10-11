@@ -1,0 +1,52 @@
+{
+  "name": "csscore",
+  "version": "0.1.0",
+  "description": "preprocessor-first css framework",
+  "author": {
+    "name": "Chris Williams",
+    "email": "spider.mane.web@gmail.com",
+    "url": "https://github.com/spider-mane"
+  },
+  "scripts": {
+    "build": "npm run lint && npm run test && npm run mix:prod",
+    "lint": "",
+    "test": "",
+    "mix:dev": "mix",
+    "mix:prod": "mix --production",
+    "watch": "mix watch",
+    "watch:poll": "mix watch -- --watch-options-poll=1000",
+    "watch:hot": "mix watch --hot"
+  },
+  "dependencies": {
+    "lodash": "^4.17"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.22",
+    "@babel/core": "^7.22",
+    "@babel/preset-env": "^7.22",
+    "@babel/register": "^7.22",
+    "@stylistic/stylelint-plugin": "^3.1.1",
+    "babel-loader": "^9.1",
+    "css-loader": "^6.8",
+    "html-webpack-plugin": "^5.5",
+    "laravel-mix": "^6.0",
+    "postcss": "^8.4",
+    "resolve-url-loader": "^5.0",
+    "sass": "^1.79",
+    "sass-loader": "^13.3",
+    "style-loader": "^3.3",
+    "stylelint": "^16.9.0",
+    "stylelint-config-standard": "^36.0.1",
+    "stylelint-config-standard-scss": "^13.1.0",
+    "stylelint-declaration-block-no-ignored-properties": "^2.8.0",
+    "stylelint-order": "^6.0.4",
+    "stylelint-plugin-defensive-css": "^1.0.4",
+    "stylelint-plugin-logical-css": "^1.2.1",
+    "stylelint-prettier": "^5.0.2",
+    "stylelint-sass-render-errors": "^4.1.0",
+    "webpack": "^5.87",
+    "webpack-cli": "^5.1",
+    "webpack-dev-server": "^4.15",
+    "yargs": "^17.7"
+  }
+}

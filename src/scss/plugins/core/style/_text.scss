@@ -1,0 +1,65 @@
+@use '../../../theme/access';
+@use '../../../theme/palette';
+@use '../../../theme/typography';
+
+@mixin color($color, $opacity: 1) {
+  color: palette.brush($color, $opacity);
+}
+
+@mixin type-size($size) {
+  font-size: typography.type-size($size);
+}
+
+@mixin display-font($weight: 'regular') {
+  @include display-weight($weight);
+
+  font-family: access.typography('family.default.display');
+}
+
+@mixin display-size($size) {
+  font-size: access.typography('size.content.display', $size);
+}
+
+@mixin display-weight($weight) {
+  font-weight: access.typography('weight.content.display', $weight);
+}
+
+@mixin heading-font($weight: 'regular') {
+  @include heading-weight($weight);
+
+  font-family: access.typography('family.default.heading');
+}
+
+@mixin heading-size($size) {
+  font-size: access.typography('size.content.heading', $size);
+}
+
+@mixin heading-weight($weight) {
+  font-weight: access.typography('weight.content.heading', $weight);
+}
+
+@mixin subheading-size($size) {
+  font-size: access.typography('size.content.subheading', $size);
+}
+
+@mixin subheading-weight($weight) {
+  font-weight: access.typography('weight.content.subheading', $weight);
+}
+
+@mixin body-font($weight: 'regular') {
+  @include body-weight($weight);
+
+  font-family: access.typography('family.default.text');
+}
+
+@mixin body-size($size) {
+  font-size: access.typography('size.content.body', $size);
+}
+
+@mixin body-weight($weight) {
+  font-weight: access.typography('weight.content.body', $weight);
+}
+
+@mixin line-height($lh) {
+  line-height: access.typography('line-height', $lh);
+}

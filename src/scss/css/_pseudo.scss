@@ -1,0 +1,9 @@
+@use '../helpers';
+
+@mixin has($selector, $context: null, $nest: false) {
+  &:has(#{$context}#{$selector}) {
+    @include helpers.maybe-nest($context, $nest) {
+      @content;
+    }
+  }
+}

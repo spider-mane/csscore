@@ -1,0 +1,80 @@
+@use 'sass:meta';
+@use 'sass:list';
+
+$_EMPTY_VALUES: (null, false, 0, '', (), []);
+
+@function is-number($value) {
+  @return 'number' == meta.type-of($value);
+}
+
+@function is-string($value) {
+  @return 'string' == meta.type-of($value);
+}
+
+@function is-color($value) {
+  @return 'color' == meta.type-of($value);
+}
+
+@function is-list($value) {
+  @return 'list' == meta.type-of($value);
+}
+
+@function is-map($value) {
+  @return 'map' == meta.type-of($value);
+}
+
+@function is-collection($value) {
+  @return is-list($value) or is-map($value);
+}
+
+@function is-calculation($value) {
+  @return 'calculation' == meta.type-of($value);
+}
+
+@function is-bool($value) {
+  @return 'bool' == meta.type-of($value);
+}
+
+@function is-bool-str($value) {
+  @return 'true' == $value or 'false' == $value;
+}
+
+@function is-boolish($value) {
+  @return is-bool($value) or is-bool-str($value);
+}
+
+@function is-null($value) {
+  @return 'null' == meta.type-of($value);
+}
+
+@function is-function($value) {
+  @return 'function' == meta.type-of($value);
+}
+
+@function is-mixin($value) {
+  @return 'mixin' == meta.type-of($value);
+}
+
+@function is-arglist($value) {
+  @return 'arglist' == meta.type-of($value);
+}
+
+@function is-empty($value) {
+  @each $empty-value in $_EMPTY_VALUES {
+    @if $empty-value == $value {
+      @return true;
+    }
+  }
+
+  @return false;
+}
+
+@function use-if($values...) {
+  @each $value in $values {
+    @if not is-null($value) {
+      @return $value;
+    }
+  }
+
+  @return null;
+}

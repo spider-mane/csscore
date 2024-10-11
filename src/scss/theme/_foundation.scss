@@ -1,0 +1,25 @@
+@use '../base/mth';
+@use '../base/test';
+@use 'access';
+@use 'sass:map';
+@use 'sass:list';
+
+@function scale($scale, $increment) {
+  $config: access.foundation('scales', $scale...);
+  $base: 0;
+  $scale: 0;
+
+  @if test.is-map($config) {
+    $base: map.get($config, 'base');
+    $scale: map.get($config, 'scale');
+  } @else {
+    $base: list.nth($config, 1);
+    $scale: list.nth($config, 2);
+  }
+
+  @return mth.modular-scale($base, $scale, $increment);
+}
+
+@function scale-if($scale, $increment) {
+  @return if($increment, scale($scale, $increment), 0);
+}

@@ -1,0 +1,10 @@
+@use '../../../theme/features';
+@use '../../../theme/palette';
+
+@mixin outline($args) {
+  outline: features.cascade('outline', $args);
+}
+
+@mixin outline-color($color, $opacity: 1) {
+  outline-color: palette.brush($color, $opacity);
+}

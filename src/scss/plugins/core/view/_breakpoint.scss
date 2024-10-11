@@ -1,0 +1,190 @@
+@use '../../../css/query';
+@use '../../../theme/access';
+
+@mixin resolved($breakpoint) {
+  @content (access.view('breakpoints', $breakpoint));
+}
+
+@mixin min($breakpoint) {
+  @include resolved($breakpoint) using ($breakpoint) {
+    @include query.min($breakpoint) {
+      @content;
+    }
+  }
+}
+
+@mixin max($breakpoint) {
+  @include resolved($breakpoint) using ($breakpoint) {
+    @include query.max($breakpoint) {
+      @content;
+    }
+  }
+}
+
+@mixin seat($breakpoint) {
+  @include resolved($breakpoint) using ($breakpoint) {
+    @include query.not-all-max($breakpoint) {
+      @content;
+    }
+  }
+}
+
+@mixin cap($breakpoint) {
+  @include resolved($breakpoint) using ($breakpoint) {
+    @include query.not-all-min($breakpoint) {
+      @content;
+    }
+  }
+}
+
+@mixin span($min, $max) {
+  @include min($min) {
+    @include max($max) {
+      @content;
+    }
+  }
+}
+
+@mixin nest($seat, $cap) {
+  @include seat($seat) {
+    @include cap($cap) {
+      @content;
+    }
+  }
+}
+
+@mixin floor($min, $cap) {
+  @include min($min) {
+    @include cap($cap) {
+      @content;
+    }
+  }
+}
+
+@mixin roof($seat, $max) {
+  @include seat($seat) {
+    @include max($max) {
+      @content;
+    }
+  }
+}
+
+@mixin sm {
+  @include min('sm') {
+    @content;
+  }
+}
+
+@mixin md {
+  @include min('md') {
+    @content;
+  }
+}
+
+@mixin lg {
+  @include min('lg') {
+    @content;
+  }
+}
+
+@mixin xl {
+  @include min('xl') {
+    @content;
+  }
+}
+
+@mixin xxl {
+  @include min('2xl') {
+    @content;
+  }
+}
+
+@mixin sm-max {
+  @include max('sm') {
+    @content;
+  }
+}
+
+@mixin md-max {
+  @include max('md') {
+    @content;
+  }
+}
+
+@mixin lg-max {
+  @include max('lg') {
+    @content;
+  }
+}
+
+@mixin xl-max {
+  @include max('xl') {
+    @content;
+  }
+}
+
+@mixin xxl-max {
+  @include max('2xl') {
+    @content;
+  }
+}
+
+@mixin sm-seat {
+  @include seat('sm') {
+    @content;
+  }
+}
+
+@mixin md-seat {
+  @include seat('md') {
+    @content;
+  }
+}
+
+@mixin lg-seat {
+  @include seat('lg') {
+    @content;
+  }
+}
+
+@mixin xl-seat {
+  @include seat('xl') {
+    @content;
+  }
+}
+
+@mixin sm-cap {
+  @include cap('sm') {
+    @content;
+  }
+}
+
+@mixin md-cap {
+  @include cap('md') {
+    @content;
+  }
+}
+
+@mixin lg-cap {
+  @include cap('lg') {
+    @content;
+  }
+}
+
+@mixin xl-cap {
+  @include cap('xl') {
+    @content;
+  }
+}
+
+@mixin xxl-cap {
+  @include cap('2xl') {
+    @content;
+  }
+}
+
+@mixin xxl-seat {
+  @include seat('2xl') {
+    @content;
+  }
+}

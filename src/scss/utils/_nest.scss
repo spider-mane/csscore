@@ -1,0 +1,26 @@
+@use '../css/size';
+
+@mixin propagate-size($width, $height, $to: '> :only-child') {
+  @include size.size($width, $height);
+
+  #{$to} {
+    @include size.size($width, $height);
+  }
+}
+
+@mixin proportional-resize(
+  $width,
+  $height,
+  $scale,
+  $adjust: '> :only-child',
+  $pin: top left
+) {
+  @include size.size($width * $scale, $height * $scale);
+
+  #{$adjust} {
+    @include size.size($width, $height);
+
+    scale: $scale;
+    transform-origin: $pin;
+  }
+}

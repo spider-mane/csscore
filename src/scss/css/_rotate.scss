@@ -1,0 +1,19 @@
+@mixin tilt-right($by) {
+  transform-origin: left bottom;
+  rotate: $by;
+}
+
+@mixin tilt-left($by) {
+  transform-origin: right bottom;
+  rotate: $by;
+}
+
+@mixin dangle-right($by) {
+  transform-origin: left top;
+  rotate: $by;
+}
+
+@mixin dangle-left($by) {
+  transform-origin: right top;
+  rotate: $by;
+}

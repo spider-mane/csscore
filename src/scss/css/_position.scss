@@ -1,0 +1,348 @@
+@use 'sass:list';
+
+@mixin set-top($val: 0) {
+  top: $val;
+  bottom: auto;
+}
+
+@mixin set-bottom($val: 0) {
+  bottom: $val;
+  top: auto;
+}
+
+@mixin set-right($val: 0) {
+  right: $val;
+  left: auto;
+}
+
+@mixin set-left($val: 0) {
+  left: $val;
+  right: auto;
+}
+
+@mixin set-center-x() {
+  left: 0;
+  right: 0;
+}
+
+@mixin set-center-y() {
+  top: 0;
+  bottom: 0;
+}
+
+@mixin set-top-left($top: 0, $left: 0) {
+  @include set-top($top);
+  @include set-left($left);
+}
+
+@mixin set-top-right($top: 0, $right: 0) {
+  @include set-top($top);
+  @include set-right($right);
+}
+
+@mixin set-bottom-left($bottom: 0, $left: 0) {
+  @include set-bottom($bottom);
+  @include set-left($left);
+}
+
+@mixin set-bottom-right($bottom: 0, $right: 0) {
+  @include set-bottom($bottom);
+  @include set-right($right);
+}
+
+@mixin affix-top($z: null, $val: 0) {
+  @include set-top($val);
+
+  position: absolute;
+  z-index: $z;
+}
+
+@mixin affix-bottom($z: null, $val: 0) {
+  @include set-bottom($val);
+
+  position: absolute;
+  z-index: $z;
+}
+
+@mixin affix-left($z: null, $val: 0) {
+  @include set-left($val);
+
+  position: absolute;
+  z-index: $z;
+}
+
+@mixin affix-right($z: null, $val: 0) {
+  @include set-right($val);
+
+  position: absolute;
+  z-index: $z;
+}
+
+@mixin affix-top-left($z: null) {
+  @include set-top-left();
+
+  position: absolute;
+  z-index: $z;
+}
+
+@mixin affix-top-right($z: null) {
+  @include set-top-right();
+
+  position: absolute;
+  z-index: $z;
+}
+
+@mixin affix-bottom-left($z: null) {
+  @include set-bottom-left();
+
+  position: absolute;
+  z-index: $z;
+}
+
+@mixin affix-bottom-right($z: null) {
+  @include set-bottom-right();
+
+  position: absolute;
+  z-index: $z;
+}
+
+@mixin fix-top($z: null, $offset: 0) {
+  @include set-top($offset);
+
+  position: fixed;
+  z-index: $z;
+}
+
+@mixin fix-bottom($z: null, $offset: 0) {
+  @include set-bottom($offset);
+
+  position: fixed;
+  z-index: $z;
+}
+
+@mixin fix-left($z: null, $offset: 0) {
+  @include set-left($offset);
+
+  position: fixed;
+  z-index: $z;
+}
+
+@mixin fix-right($z: null, $offset: 0) {
+  @include set-right($offset);
+
+  position: fixed;
+  z-index: $z;
+}
+
+@mixin fix-top-left($z: null, $top: 0, $left: 0) {
+  @include set-top-left($top, $left);
+
+  position: fixed;
+  z-index: $z;
+}
+
+@mixin fix-top-right($z: null, $top: 0, $right: 0) {
+  @include set-top-right($top, $right);
+
+  position: fixed;
+  z-index: $z;
+}
+
+@mixin fix-top-center($z: null, $offset: 0) {
+  @include fix-top($z, $offset);
+  @include set-center-x();
+}
+
+@mixin fix-bottom-left($z: null, $bottom: 0, $left: 0) {
+  @include set-bottom-left($bottom, $left);
+
+  position: fixed;
+  z-index: $z;
+}
+
+@mixin fix-bottom-right($z: null, $bottom: 0, $right: 0) {
+  @include set-bottom-right($bottom, $right);
+
+  position: fixed;
+  z-index: $z;
+}
+
+@mixin fix-bottom-center($z: null, $offset: 0) {
+  @include fix-bottom($z, $offset);
+  @include set-center-x();
+}
+
+@mixin escape-left($value) {
+  left: -($value);
+  right: auto;
+}
+
+@mixin escape-right($value) {
+  right: -($value);
+  left: auto;
+}
+
+@mixin migrate-top($value) {
+  bottom: $value;
+  top: auto;
+}
+
+@mixin migrate-bottom($value) {
+  top: $value;
+  bottom: auto;
+}
+
+@mixin migrate-left($value) {
+  right: $value;
+  left: auto;
+}
+
+@mixin migrate-right($value) {
+  left: $value;
+  right: auto;
+}
+
+@mixin anchor-top() {
+  @include migrate-top(100%);
+
+  position: absolute;
+}
+
+@mixin anchor-bottom() {
+  @include migrate-bottom(100%);
+
+  position: absolute;
+}
+
+@mixin anchor-left() {
+  @include migrate-left(100%);
+
+  position: absolute;
+}
+
+@mixin anchor-right() {
+  @include migrate-right(100%);
+
+  position: absolute;
+}
+
+@mixin offset-fill($offsets, $position: absolute, $z: 10) {
+  $values: ();
+
+  @each $value in $offsets {
+    $values: list.append($values, 0 - $value);
+  }
+
+  // @include position($position, $values);
+
+  z-index: $z;
+}
+
+@mixin absolute-center($position: absolute) {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+}
+
+@mixin absolute-stretch($position: absolute, $z: 10) {
+  position: $position;
+  left: 0;
+  right: 0;
+  z-index: $z;
+}
+
+@mixin absolute-reach($position: absolute, $z: 10) {
+  position: $position;
+  top: 0;
+  bottom: 0;
+  z-index: $z;
+}
+
+@mixin absolute-top($position: absolute, $z: 10) {
+  @include absolute-stretch($position, $z);
+
+  top: 0;
+}
+
+@mixin absolute-bottom($position: absolute, $z: 10) {
+  @include absolute-stretch($position, $z);
+
+  bottom: 0;
+}
+
+@mixin absolute-left($position: absolute, $z: 10) {
+  @include absolute-reach($position, $z);
+
+  left: 0;
+}
+
+@mixin absolute-right($position: absolute, $z: 10) {
+  @include absolute-reach($position, $z);
+
+  right: 0;
+}
+
+@mixin absolute-fill($position: absolute, $z: 10) {
+  @include absolute-top($position, $z);
+
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+@mixin nest($offset: 0, $z: null) {
+  position: absolute;
+  z-index: $z;
+  top: $offset;
+  bottom: $offset;
+  left: $offset;
+  right: $offset;
+}
+
+@mixin cover($z: 10) {
+  @include absolute-fill(absolute, $z);
+}
+
+@mixin cover-top($z: 10) {
+  @include absolute-top(absolute, $z);
+}
+
+@mixin cover-bottom($z: 10) {
+  @include absolute-bottom(absolute, $z);
+}
+
+@mixin cover-left($z: 10) {
+  @include absolute-left(absolute, $z);
+}
+
+@mixin cover-right($z: 10) {
+  @include absolute-right(absolute, $z);
+}
+
+@mixin cover-screen($z: 100) {
+  @include absolute-fill(fixed, $z);
+}
+
+@mixin cover-screen-top($z: 100) {
+  @include absolute-top(fixed, $z);
+}
+
+@mixin cover-screen-bottom($z: 100) {
+  @include absolute-bottom(fixed, $z);
+}
+
+@mixin cover-screen-left($z: 100) {
+  @include absolute-left(fixed, $z);
+}
+
+@mixin cover-screen-right($z: 100) {
+  @include absolute-right(fixed, $z);
+}
+
+@mixin unset() {
+  top: unset;
+  bottom: unset;
+  left: unset;
+  right: unset;
+}

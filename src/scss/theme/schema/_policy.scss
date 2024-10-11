@@ -1,0 +1,32 @@
+$config: (
+  'properties': (
+    'text': (
+      font-family: 'family',
+      font-size: 'size',
+      font-weight: 'weight',
+      font-style: 'style',
+      line-height: 'line-height',
+      letter-spacing: 'spacing',
+      text-decoration: 'decoration',
+    ),
+
+    'color': (
+      color: 'color',
+    ),
+  ),
+
+  'states': (
+    'default': 'hover' 'active',
+  ),
+
+  'component': (
+    'variant': (
+      'base': '#variations',
+      'definitions': '#define',
+      'style': '#style',
+      'apply': '#apply',
+      'args': '#map',
+      'prefix': '',
+    ),
+  ),
+);

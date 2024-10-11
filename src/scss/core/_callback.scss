@@ -1,0 +1,154 @@
+@use '../base/lst';
+@use '../base/str';
+@use '../base/test';
+@use 'sass:map';
+@use 'sass:meta';
+@use 'sass:list';
+
+@function action($value, $function, $single: false) {
+  @return if(
+    $single,
+    meta.call($function, $value),
+    meta.call($function, $value...)
+  );
+}
+
+@function test($value, $test, $inverse: false, $single: true) {
+  $result: action($value, $test, $single);
+
+  @return if($inverse, not $result, $result);
+}
+
+@function resolve-function($definition) {
+  @return list.nth($definition, 1);
+}
+
+@function resolve-args($definition, $value) {
+  $args: get-directive($definition, 'args');
+
+  @if test.is-null($args) {
+    @return $value;
+  }
+
+  @if test.is-number($args) {
+    @return lst.from-start($value, $args);
+  }
+
+  @return converge-args($args, $value);
+}
+
+@function resolve-flags($definition) {
+  $flags: get-directive($definition, 'flags');
+
+  @return if(test.is-null($flags), (), $flags);
+}
+
+@function get-directive($definition, $directive) {
+  @each $item in $definition {
+    @if test.is-map($item) and map.has-key($item, $directive) {
+      @return map.get($item, $directive);
+    }
+  }
+
+  @return null;
+}
+
+@function converge-args($defined, $computed) {
+  $sym: '$';
+
+  @for $i from 1 through list.length($computed) {
+    $defined: lst.replace-all($defined, $sym + $i, list.nth($computed, $i));
+  }
+
+  @return str.unescape-start-ls($defined, $sym);
+}
+
+@function actions($value, $actions...) {
+  @each $action in $actions {
+    $function: resolve-function($action);
+    $args: resolve-args($action, $value);
+    $flags: resolve-flags($action);
+
+    $single: lst.has($flags, 'single');
+
+    $value: action($args, $function, $single);
+  }
+
+  @return $value;
+}
+
+@function tests($value, $tests...) {
+  @each $test in $tests {
+    $function: resolve-function($test);
+    $args: resolve-args($test, $value);
+    $flags: resolve-flags($test);
+
+    $inverse: lst.has($flags, 'inverse');
+    $single: not lst.has($flags, 'unpack');
+
+    @if not test($args, $function, $inverse, $single) {
+      @return false;
+    }
+  }
+
+  @return true;
+}
+
+@function transform-if($value, $test, $action) {
+  @return if(tests($value, $test), actions($value, $action), $value);
+}
+
+@function is-invocable($list) {
+  @return test.is-function(list.nth($list, 1));
+}
+
+@function resolve-invocable($value, $args...) {
+  @return if(is-invocable($value), actions($args, $value), $value);
+}
+
+@function call($function) {
+  @return ('function': $function);
+}
+
+@function pass($args...) {
+  @return ('args': $args);
+}
+
+@function flag($flags...) {
+  @return ('flags': $flags);
+}
+
+@function hold($function, $args: null, $flags: null) {
+  @return $function pass($args) flag($flags);
+}
+
+@function inverse($value) {
+  @return not $value;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+/// API helper if data structure is map
+///
+/// @example
+/// $callback: -invocation-api(
+///   meta.get-function('function'),
+///   pass($var1, '$2', '$1', $var2),
+///   flag('flag')
+/// );
+@function -invocation-api($definition) {
+  $defined: (
+    'function': list.nth($definition, 1),
+  );
+
+  @for $i from 2 through list.length($definition) {
+    $defined: map.merge($defined, list.nth($definition, $i));
+    // $defined: map.set($defined, list.nth($i, 1), list.nth($i, 2));
+  }
+
+  @return $defined;
+}
+
+/// API helper if data structure is list
+@function -invocation-api($function, $args: null, $flags: null) {
+  @return $function $args $flags;
+}

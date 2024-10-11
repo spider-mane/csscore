@@ -1,0 +1,8 @@
+@use 'insert';
+
+@mixin clearfix() {
+  @include insert.after {
+    display: block;
+    clear: both;
+  }
+}

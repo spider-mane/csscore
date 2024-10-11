@@ -1,0 +1,171 @@
+@use '../core/navi';
+@use 'sass:meta';
+@use 'schema';
+
+@function -get-config($namespace, $key...) {
+  @return navi.join-request($namespace, $key...);
+}
+
+@function -has-config($namespace, $key...) {
+  @return navi.join-has($namespace, $key...);
+}
+
+@function all-config() {
+  @return meta.module-variables('schema');
+}
+
+@function config($key...) {
+  @return -get-config(all-config(), $key...);
+}
+
+@function config-has($key...) {
+  @return -has-config(all-config(), $key...);
+}
+
+// Policy
+
+@function policy($key...) {
+  @return -get-config(schema.$policy, $key...);
+}
+
+@function policy-has($key...) {
+  @return -has-config(schema.$policy, $key...);
+}
+
+// Foundation
+
+@function foundation($key...) {
+  @return -get-config(schema.$foundation, $key...);
+}
+
+@function foundation-has($key...) {
+  @return -has-config(schema.$foundation, $key...);
+}
+
+// Context
+
+@function view($key...) {
+  @return -get-config(schema.$view, $key...);
+}
+
+@function view-has($key...) {
+  @return -has-config(schema.$view, $key...);
+}
+
+@function states($key...) {
+  @return -get-config(schema.$states, $key...);
+}
+
+@function states-has($key...) {
+  @return -has-config(schema.$states, $key...);
+}
+
+// Tokens
+
+@function vendors($key...) {
+  @return -get-config(schema.$vendors, $key...);
+}
+
+@function vendors-has($key...) {
+  @return -has-config(schema.$vendors, $key...);
+}
+
+@function assets($key...) {
+  @return -get-config(schema.$assets, $key...);
+}
+
+@function assets-has($key...) {
+  @return -has-config(schema.$assets, $key...);
+}
+
+@function blueprint($key...) {
+  @return -get-config(schema.$blueprint, $key...);
+}
+
+@function blueprint-has($key...) {
+  @return -has-config(schema.$blueprint, $key...);
+}
+
+@function palette($key...) {
+  @return -get-config(schema.$palette, $key...);
+}
+
+@function palette-has($key...) {
+  @return -has-config(schema.$palette, $key...);
+}
+
+@function typography($key...) {
+  @return -get-config(schema.$typography, $key...);
+}
+
+@function typography-has($key...) {
+  @return -has-config(schema.$typography, $key...);
+}
+
+@function features($key...) {
+  @return -get-config(schema.$features, $key...);
+}
+
+@function features-has($key...) {
+  @return -has-config(schema.$features, $key...);
+}
+
+@function variables($key...) {
+  @return -get-config(schema.$variables, $key...);
+}
+
+@function variables-has($key...) {
+  @return -has-config(schema.$variables, $key...);
+}
+
+// Elements
+
+@function reset($key...) {
+  @return -get-config(schema.$reset, $key...);
+}
+
+@function reset-has($key...) {
+  @return -has-config(schema.$reset, $key...);
+}
+
+@function base($key...) {
+  @return -get-config(schema.$base, $key...);
+}
+
+@function base-has($key...) {
+  @return -has-config(schema.$base, $key...);
+}
+
+@function components($key...) {
+  @return -get-config(schema.$components, $key...);
+}
+
+@function components-has($key...) {
+  @return -has-config(schema.$components, $key...);
+}
+
+@function layout($key...) {
+  @return -get-config(schema.$layouts, $key...);
+}
+
+@function layout-has($key...) {
+  @return -has-config(schema.$layouts, $key...);
+}
+
+@function sections($key...) {
+  @return -get-config(schema.$sections, $key...);
+}
+
+@function sections-has($key...) {
+  @return -has-config(schema.$sections, $key...);
+}
+
+// Extra
+
+@function extra($key...) {
+  @return -get-config(schema.$extra, $key...);
+}
+
+@function extra-has($key...) {
+  @return -has-config(schema.$extra, $key...);
+}

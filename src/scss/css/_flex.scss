@@ -1,0 +1,64 @@
+@use 'size';
+
+@mixin row($gap: null, $justify: null, $align: null) {
+  display: flex;
+  flex-direction: row;
+  column-gap: $gap;
+  justify-content: $justify;
+  align-items: $align;
+}
+
+@mixin column($gap: null, $justify: null, $align: null) {
+  display: flex;
+  flex-direction: column;
+  row-gap: $gap;
+  justify-content: $justify;
+  align-items: $align;
+}
+
+@mixin hug() {
+  justify-content: stretch;
+  align-content: stretch;
+  align-items: stretch;
+}
+
+@mixin fit() {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+@mixin fill() {
+  @include fit();
+
+  align-self: stretch;
+}
+
+@mixin adhere() {
+  @include hug();
+  @include fill();
+}
+
+@mixin arrange-start() {
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+@mixin arrange-end() {
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+@mixin arrange-center() {
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin col-half() {
+  @include size.definite-height(50%);
+  @include fit();
+}
+
+@mixin row-half() {
+  @include size.definite-width(50%);
+  @include fit();
+}

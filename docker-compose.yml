@@ -1,0 +1,50 @@
+name: csscore
+
+services:
+  app:
+    extends:
+      file: docker-compose.definitions.yml
+      service: app
+    networks:
+      - app
+    depends_on:
+      - browser
+      - cache
+      - server
+
+  server:
+    extends:
+      file: docker-compose.definitions.yml
+      service: server
+    networks:
+      - app
+    environment:
+      SERVER_NAME: '${SERVER_NAME:-localhost}'
+      SERVER_PORT: '${SERVER_PORT:-80}'
+      APP_NAME: app
+      APP_PORT: 9000
+      WEB_ROOT: /var/www/html/public
+
+  cache:
+    extends:
+      file: docker-compose.definitions.yml
+      service: cache
+    networks:
+      - app
+    volumes:
+      - 'cache.data:/data'
+
+  browser:
+    extends:
+      file: docker-compose.definitions.yml
+      service: browser
+    networks:
+      - app
+
+networks:
+  app:
+    driver: bridge
+
+volumes:
+  cache.data:
+    driver: local

@@ -1,0 +1,23 @@
+@use '../base/test';
+@use '../core/data';
+@use '../core/data';
+@use 'sass:map';
+
+$-name: 'Config';
+$-config: ();
+
+@function get($value) {
+  @return data.get($-config, $value);
+}
+
+@function has($value) {
+  @return data.get($-config, $value);
+}
+
+@mixin init($config) {
+  $-config: data.maybe-init($-name, $-config, $config);
+}
+
+@mixin set($namespace) {
+  $-config: data.maybe-set($-name, $namespace, $-config, $namespace);
+}

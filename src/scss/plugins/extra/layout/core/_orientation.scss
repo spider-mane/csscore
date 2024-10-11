@@ -1,0 +1,160 @@
+@use '../../../../css/flex';
+@use '../../../../css/position';
+@use '../../../../css/size';
+@use '../../../core/view/bp';
+@use 'sass:list';
+
+$_medium: 'md';
+$_large: 'lg';
+
+// Row
+@mixin row() {
+  @include flex.column(null, flex-start, flex-start);
+  @include flex.fit();
+
+  @include bp.min($_large) {
+    flex-direction: row;
+  }
+}
+
+@mixin row-reverse() {
+  @include bp.min($_large) {
+    flex-direction: row-reverse;
+  }
+}
+
+// Column (Top(
+@mixin column() {
+  @include flex.column();
+  @include flex.fit();
+}
+
+@mixin column-flip() {
+  @include bp.min($_large) {
+    flex-direction: column-reverse;
+  }
+}
+
+// Column (Bottom)
+@mixin column-bottom() {
+  @include flex.column(null, flex-end);
+  @include flex.fit();
+}
+
+@mixin column-bottom-flip() {
+  @include bp.min($_large) {
+    flex-direction: column-reverse;
+  }
+}
+
+// Box (Top)
+@mixin box-top() {
+  @include flex.column(null, flex-start, flex-start);
+  @include flex.fit();
+}
+
+@mixin box-top-reverse() {
+  @include bp.min($_large) {
+    align-items: flex-end;
+  }
+}
+
+@mixin box-top-flip() {
+  @include bp.min($_large) {
+    justify-content: flex-end;
+  }
+}
+
+// Box (Bottom)
+@mixin box-bottom() {
+  @include flex.column(null, flex-end, flex-start);
+  @include flex.fit();
+}
+
+@mixin box-bottom-reverse() {
+  @include bp.min($_large) {
+    align-items: flex-start;
+  }
+}
+
+@mixin box-bottom-flip() {
+  @include bp.min($_large) {
+    justify-content: flex-start;
+  }
+}
+
+// Block
+@mixin block() {
+  @include bp.min($_large) {
+    align-self: flex-start;
+  }
+}
+
+@mixin block-switch() {
+  @include bp.min($_large) {
+    align-self: flex-end;
+  }
+}
+
+// Mount
+@mixin mount() {
+  position: relative;
+
+  justify-content: center;
+  align-items: flex-start;
+
+  // background-color: green;
+}
+
+@mixin mount-reverse() {
+  // align-self: flex-end;
+}
+
+// Carrier (Top)
+@mixin carrier-top() {
+  @include bp.min($_large) {
+    @include position.set-top();
+    @include position.set-left();
+
+    position: relative;
+  }
+}
+
+@mixin carrier-top-reverse() {
+  @include bp.min($_large) {
+    @include position.set-right();
+  }
+}
+
+@mixin carrier-top-flip() {
+  @include position.set-bottom();
+}
+
+// Carrier (Bottom)
+@mixin carrier-bottom() {
+  @include bp.min($_large) {
+    @include position.affix-bottom();
+    @include size.surround-content();
+  }
+}
+
+@mixin carrier-bottom-reverse() {
+  //
+}
+
+@mixin carrier-bottom-flip() {
+  @include position.set-top();
+}
+
+// Title
+@mixin title() {
+  @include flex.row();
+
+  align-self: flex-start;
+  text-align: left;
+}
+
+@mixin title-reverse() {
+  align-self: flex-end;
+  text-align: right;
+}

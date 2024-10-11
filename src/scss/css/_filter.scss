@@ -1,0 +1,17 @@
+@mixin filters($filters) {
+  $value: '';
+
+  @each $filter, $arg in $filters {
+    $value: $value + ' #{$filter}(#{$arg})';
+  }
+
+  filter: #{$value};
+}
+
+@mixin blur($value) {
+  filter: blur($value);
+}
+
+@mixin invert($value) {
+  filter: invert($value);
+}

@@ -1,0 +1,9 @@
+@mixin x($value) {
+  padding-left: $value;
+  padding-right: $value;
+}
+
+@mixin y($value) {
+  padding-top: $value;
+  padding-bottom: $value;
+}

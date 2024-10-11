@@ -1,0 +1,55 @@
+@use '../base/test';
+@use '../core/navi';
+@use 'sass:map';
+
+@mixin property($property, $states, $config, $key) {
+  $value: navi.get($config, $key);
+
+  @if test.is-map($value) {
+    $default: '@default';
+
+    @if map.has-key($value, $default) {
+      #{$property}: map.get($value, $default);
+    }
+
+    @each $state in $states {
+      $pseudo: '@#{$state}';
+
+      @if map.has-key($value, $pseudo) {
+        &:#{$state} {
+          #{$property}: map.get($value, $pseudo);
+        }
+      }
+    }
+  } @else {
+    #{$property}: $value;
+  }
+}
+
+@mixin properties-cascade($properties, $states, $config, $cascade...) {
+  @each $property, $system in $properties {
+    $match: false;
+
+    @each $segment in $cascade {
+      $key: navi.join($system, $segment...);
+
+      @if $match == false and navi.has($config, $key) {
+        @include property($property, $states, $config, $key);
+
+        $match: true;
+      }
+    }
+  }
+}
+
+@mixin properties-map($states, $config, $map) {
+  @each $property, $key-segments in $map {
+    $key: navi.join($key-segments...);
+
+    @include property($property, $states, $config, $key);
+  }
+}
+
+@mixin variants($definitions, $properties, $config...) {
+  //
+}

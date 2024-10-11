@@ -1,0 +1,13 @@
+@use '../../../core/block';
+
+@mixin when-orientation-reversed() {
+  @include block.option('layout.justify.right') {
+    @content;
+  }
+}
+
+@mixin when-orientation-flipped() {
+  @include block.option('layout.align.top') {
+    @content;
+  }
+}

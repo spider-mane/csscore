@@ -1,0 +1,32 @@
+@use 'grp';
+@use 'sass:list';
+@use 'sass:selector';
+
+@function first-selector($selector: &) {
+  @return list.nth($selector, 1);
+}
+
+@function last-selector($selector: &) {
+  @return list.nth($selector, -1);
+}
+
+@function leading-selector($selector: &) {
+  @return list.nth(first-selector($selector), 1);
+}
+
+@function trailing-selector($selector: &) {
+  @return list.nth(last-selector($selector), -1);
+}
+
+@function combine-selectors($selectors...) {
+  @return grp.implode(',', $selectors...);
+}
+
+@function root-selector($selector: &) {
+  @while (selector.nest($selector) != $selector) {
+    $selector: selector.parse($selector);
+    $selector: list.nth($selector, 1);
+  }
+
+  @return $selector;
+}

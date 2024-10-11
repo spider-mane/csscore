@@ -1,0 +1,30 @@
+@use 'test';
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:meta';
+
+@function flatten($items...) {
+  $result: ();
+
+  @each $item in $items {
+    @if test.is-list($item) {
+      $result: list.join($result, flatten($item...));
+    } @else if test.is-map($item) {
+      $result: list.join($result, flatten(map.values($item)...));
+    } @else {
+      $result: list.append($result, $item);
+    }
+  }
+
+  @return $result;
+}
+
+@function implode($separator, $lists...) {
+  $joined: null;
+
+  @each $list in flatten($lists...) {
+    $joined: if(test.is-null($joined), $list, $joined + $separator + $list);
+  }
+
+  @return $joined;
+}

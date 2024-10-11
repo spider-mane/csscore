@@ -1,0 +1,21 @@
+@use '../../../base/slctr';
+@use '../../../core/css';
+@use '../../../theme/access';
+
+@function component($property) {
+  $component: css.strip-class(slctr.leading-selector());
+
+  @return access.components($component, $property);
+}
+
+@function layout($property) {
+  $layout: css.strip-class(slctr.leading-selector());
+
+  @return layouts($layout, $property);
+}
+
+@function section($property) {
+  $section: css.strip-class(slctr.leading-selector());
+
+  @return access.sections($section, $property);
+}

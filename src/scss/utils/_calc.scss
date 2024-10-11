@@ -1,0 +1,3 @@
+@function units-of($val, $units: 100) {
+  @return calc($val / 100 * $units);
+}

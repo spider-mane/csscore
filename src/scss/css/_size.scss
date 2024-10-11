@@ -1,0 +1,170 @@
+@mixin minimized-width($width) {
+  min-width: $width;
+  width: $width;
+}
+
+@mixin maximized-width($width) {
+  max-width: $width;
+  width: $width;
+}
+
+@mixin ranged-width($min, $max) {
+  min-width: $min;
+  max-width: $max;
+}
+
+@mixin elastic-width($base, $max) {
+  width: $base;
+  max-width: $max;
+}
+
+@mixin abstract-width($width) {
+  @include ranged-width($width, $width);
+}
+
+@mixin definite-width($width) {
+  @include abstract-width($width);
+
+  width: $width;
+}
+
+@mixin minimized-height($height) {
+  min-height: $height;
+  height: $height;
+}
+
+@mixin maximized-height($height) {
+  max-height: $height;
+  height: $height;
+}
+
+@mixin ranged-height($min, $max) {
+  min-height: $min;
+  max-height: $max;
+}
+
+@mixin elastic-height($base, $max) {
+  height: $base;
+  max-height: $max;
+}
+
+@mixin abstract-height($height) {
+  @include ranged-height($height, $height);
+}
+
+@mixin definite-height($height) {
+  @include abstract-height($height);
+
+  height: $height;
+}
+
+@mixin size($width, $height) {
+  width: $width;
+  height: $height;
+}
+
+@mixin minimized-size($width, $height) {
+  @include minimized-width($width);
+  @include minimized-height($height);
+}
+
+@mixin maximized-size($width, $height) {
+  @include maximized-width($width);
+  @include maximized-height($height);
+}
+
+@mixin abstract-size($width, $height) {
+  @include abstract-width($width);
+  @include abstract-height($height);
+}
+
+@mixin definite-size($width, $height) {
+  @include definite-width($width);
+  @include definite-height($height);
+}
+
+@mixin match($size) {
+  @include size($size, $size);
+}
+
+@mixin minimized-match($size) {
+  @include minimized-size($size, $size);
+}
+
+@mixin maximized-match($size) {
+  @include maximized-size($size, $size);
+}
+
+@mixin abstract-match($size) {
+  @include abstract-size($size, $size);
+}
+
+@mixin definite-match($size) {
+  @include definite-size($size, $size);
+}
+
+@mixin fluid-width() {
+  max-width: 100%;
+  height: auto;
+}
+
+@mixin fluid-height() {
+  max-height: 100%;
+  width: auto;
+}
+
+@mixin sticky-width() {
+  @include definite-width(100%);
+
+  height: auto;
+}
+
+@mixin sticky-height() {
+  @include definite-height(100%);
+
+  width: auto;
+}
+
+@mixin fit-container-x() {
+  @include maximized-width(100%);
+}
+
+@mixin fit-container-y() {
+  @include maximized-height(100%);
+}
+
+@mixin fit-container() {
+  @include maximized-match(100%);
+}
+
+@mixin fill-container-x() {
+  @include definite-width(100%);
+}
+
+@mixin fill-container-y() {
+  @include definite-height(100%);
+}
+
+@mixin fill-container() {
+  @include definite-match(100%);
+}
+
+@mixin hug-content() {
+  @include match(fit-content);
+}
+
+@mixin surround-content() {
+  @include abstract-match(fit-content);
+}
+
+@mixin squeeze-content() {
+  @include definite-match(fit-content);
+}
+
+@mixin inherit-size() {
+  @include match(inherit);
+}
+
+@mixin unset() {
+  @include definite-match(unset);
+}

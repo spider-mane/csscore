@@ -1,0 +1,27 @@
+@use 'sass:math';
+
+@function modular-scale($base, $scale, $increment) {
+  @return $base * math.pow($scale, $increment);
+}
+
+@function modular-scale-if($base, $scale, $increment) {
+  @return if($increment, modular-scale($base, $scale, $increment), 0);
+}
+
+@function sum($numbers...) {
+  $sum: 0;
+
+  @each $number in $numbers {
+    $sum: $sum + $number;
+  }
+
+  @return $sum;
+}
+
+@function px-to-em($px, $font: 16px) {
+  @return math.div($px, $font);
+}
+
+@function em-to-px($em, $font: 16px) {
+  @return $em * $font;
+}

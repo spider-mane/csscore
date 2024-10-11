@@ -1,0 +1,21 @@
+@use '../../utils/var';
+
+/// Real Viewport Width (requires rvpd javascript module)
+@function rvw($units: 100) {
+  @return var.units-of(--rvw, $units);
+}
+
+/// Real Viewport Height (requires rvpd javascript module)
+@function rvh($units: 100) {
+  @return var.units-of(--rvh, $units);
+}
+
+/// Visual Viewport Width (requires rvpd javascript module)
+@function vvw($units: 100) {
+  @return var.units-of(--vvw, $units);
+}
+
+/// Visual Viewport Height (requires rvpd javascript module)
+@function vvh($units: 100) {
+  @return var.units-of(--vvh, $units);
+}

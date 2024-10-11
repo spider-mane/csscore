@@ -1,0 +1,37 @@
+@use '../base/grp';
+@use '../base/lst';
+@use '../base/test';
+@use 'sass:map';
+@use 'sass:string';
+
+@function split($key...) {
+  @return string.split(join($key...), '.');
+}
+
+@function get($map, $key) {
+  @return map.get($map, split($key)...);
+}
+
+@function request($map, $key) {
+  @return if(test.is-empty($key), $map, get($map, $key));
+}
+
+@function has($map, $key) {
+  @return map.has-key($map, split($key)...);
+}
+
+@function join($segments...) {
+  @return grp.implode('.', $segments...);
+}
+
+@function join-get($map, $segments...) {
+  @return get($map, join($segments...));
+}
+
+@function join-request($map, $key...) {
+  @return if(lst.is-empty($key), $map, join-get($map, $key...));
+}
+
+@function join-has($map, $segments...) {
+  @return has($map, join($segments...));
+}

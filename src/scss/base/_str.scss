@@ -1,0 +1,95 @@
+@use 'grp';
+@use 'lst';
+@use 'test';
+@use 'sass:meta';
+@use 'sass:string';
+
+/// Semantic alias for `meta.inspect()`
+///
+/// @link https://sass-lang.com/documentation/modules/meta/#inspect
+/// @link https://github.com/sass/sass/issues/2383#issuecomment-336349172
+///
+/// @param {any} $value
+///
+/// @return {string} $value as a string
+@function from($value) {
+  @return meta.inspect($value);
+}
+
+@function replace($string, $find, $replace) {
+  @return grp.implode($replace, string.split($string, $find));
+}
+
+@function starts-with($string, $prefix) {
+  @return string.index($string, $prefix) == 1;
+}
+
+@function ends-with($string, $suffix) {
+  @return string.slice($string, -(string.length($suffix)), -1) == $suffix;
+}
+
+@function trim-start($string, $prefix) {
+  @return if(
+    starts-with($string, $prefix),
+    string.slice($string, string.length($prefix) + 1),
+    $string
+  );
+}
+
+@function trim-end($string, $suffix) {
+  @return if(
+    ends-with($string, $suffix),
+    string.slice($string, 1, -(string.length($suffix) + 1)),
+    $string
+  );
+}
+
+@function escape($string, $chars...) {
+  @each $char in $chars {
+    @if (string.index($string, $char)) {
+      $string: replace($string, $char, '\\'+ $char);
+    }
+  }
+
+  @return $string;
+}
+
+@function unescape($string, $chars...) {
+  @each $char in $chars {
+    @if (string.index($string, $char)) {
+      $string: replace($string, '\\'+ $char, $char);
+    }
+  }
+
+  @return $string;
+}
+
+@function unescape-start($string, $char: null) {
+  @if starts-with($string, '\\'+ $char) {
+    $string: string.slice($string, 2);
+  }
+
+  @return $string;
+}
+
+@function unescape-ls($list, $char) {
+  $escaped: '\\'+ $char;
+
+  @each $item in $list {
+    @if test.is-string($item) and string.index($item, $escaped) {
+      $list: lst.replace($list, $item, replace($item, $escaped, $char));
+    }
+  }
+
+  @return $list;
+}
+
+@function unescape-start-ls($list, $char: null) {
+  @each $item in $list {
+    @if test.is-string($item) and starts-with($item, '\\'+ $char) {
+      $list: lst.replace($list, $item, string.slice($item, 2));
+    }
+  }
+
+  @return $list;
+}

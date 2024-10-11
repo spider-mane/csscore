@@ -1,0 +1,59 @@
+@use '../base/str';
+@use '../base/test';
+@use 'sass:meta';
+
+@mixin incremented-selectors($template, $start, $count, $value, $increment) {
+  $function: test.is-function($increment);
+
+  @for $i from $start through $count {
+    @at-root #{str.replace($template, '$i', $i)} {
+      @content ($value, $i);
+    }
+
+    $value: if(
+      $function,
+      meta.call($function, $value, $i),
+      $value + $increment
+    );
+  }
+}
+
+@mixin property-group($base, $properties) {
+  @each $property, $value in $properties {
+    #{$base}-#{$property}: $value;
+  }
+}
+
+@mixin property-in-context($property, $value, $contexts...) {
+  @each $context in $contexts {
+    #{$context} & {
+      #{$property}: $value;
+    }
+  }
+}
+
+@mixin aggregate($items, $mixin) {
+  @each $item in $items {
+    @include meta.apply($mixin, $item) {
+      @content ($item);
+    }
+  }
+}
+
+@mixin nested($selector) {
+  #{&}#{$selector} {
+    @content;
+  }
+}
+
+@mixin maybe-nest($context: null, $nest: false) {
+  @if $nest and $context {
+    #{$context} {
+      @content;
+    }
+  } @else {
+    & {
+      @content;
+    }
+  }
+}

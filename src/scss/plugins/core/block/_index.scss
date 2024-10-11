@@ -1,0 +1,58 @@
+@use '../../../core/block';
+@use '../../../css/pseudo';
+@use '../../../theme/access';
+@use 'sass:meta';
+
+@function -block-format() {
+  @return access.extra('blocks.format');
+}
+
+@function layer($name) {
+  @return block.generate-layer($name, -block-format());
+}
+
+@function option($option...) {
+  @return block.class-option($option, -block-format());
+}
+
+@mixin layer($name) {
+  #{layer($name)} {
+    @content;
+  }
+}
+
+@mixin option($option...) {
+  @include class-option($option...) {
+    @content;
+  }
+}
+
+@mixin class-option($option...) {
+  &#{option($option...)} {
+    @content;
+  }
+}
+
+@mixin data-option($option) {
+  &#{block.data-option($option)} {
+    @content;
+  }
+}
+
+@mixin has-with-option($option, $context: null, $nest: false) {
+  @include pseudo.has(option($option), $context, $nest) {
+    @content;
+  }
+}
+
+@mixin has-with-class-option($option, $context: null, $nest: false) {
+  @include pseudo.has(block.class-option($option), $context, $nest) {
+    @content;
+  }
+}
+
+@mixin has-with-data-option($option, $context: null, $nest: false) {
+  @include pseudo.has(block.data-option($option), $context, $nest) {
+    @content;
+  }
+}

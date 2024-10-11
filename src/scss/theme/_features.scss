@@ -1,0 +1,26 @@
+@use '../base/test';
+@use 'access';
+@use 'palette';
+@use 'sass:list';
+
+@function cascade($effect, $args) {
+  @return if(
+    test.is-string($args),
+    access.features($effect, $args),
+    palette.parse-entries($args)
+  );
+}
+
+@function cascade-loop($effect, $args...) {
+  $first: list.nth($args, 1);
+
+  @return if(
+    test.is-string($first) and list.length($args) == 1,
+    access.features($effect, $first),
+    palette.parse-nested-entries($args...)
+  );
+}
+
+@function easing($function) {
+  @return access.features('easing', $function);
+}

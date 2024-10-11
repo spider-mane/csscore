@@ -1,0 +1,9 @@
+@use '../css/query';
+
+@mixin mouseover {
+  @include query.mouse {
+    &:hover {
+      @content;
+    }
+  }
+}

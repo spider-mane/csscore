@@ -1,0 +1,33 @@
+@use '../base/clr';
+@use '../core/css';
+@use '../core/parse';
+@use '../spec/api';
+@use 'access';
+@use 'sass:list';
+@use 'sass:meta';
+
+@function swatch($color) {
+  @return api.color(access.palette(), $color);
+}
+
+@function brush($color, $opacity: 1) {
+  @return clr.set-alpha(swatch($color), $opacity);
+}
+
+@function design-parse-color($color) {
+  @return parse.parse-color($color, meta.get-function('brush'));
+}
+
+@function parse-entries($list) {
+  @return css.parse-shorthand($list, meta.get-function('brush'));
+}
+
+@function parse-nested-entries($lists...) {
+  $result: ();
+
+  @each $list in $lists {
+    $result: list.append($result, parse-entries($list), 'comma');
+  }
+
+  @return $result;
+}

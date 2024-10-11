@@ -1,0 +1,6 @@
+**/*.hbs
+*.lock
+*.log
+.*
+build
+node_modules

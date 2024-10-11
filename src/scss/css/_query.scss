@@ -1,0 +1,173 @@
+@mixin min($width) {
+  @media (min-width: $width) {
+    @content;
+  }
+}
+
+@mixin max($width) {
+  @media (max-width: $width) {
+    @content;
+  }
+}
+
+@mixin range($min, $max) {
+  @media (min-width: $min) and (max-width: $max) {
+    @content;
+  }
+}
+
+@mixin screen-min($width) {
+  @media screen and (min-width: $width) {
+    @content;
+  }
+}
+
+@mixin screen-max($width) {
+  @media screen and (max-width: $width) {
+    @content;
+  }
+}
+
+@mixin not-all-min($width) {
+  @media not all and (min-width: $width) {
+    @content;
+  }
+}
+
+@mixin not-all-max($width) {
+  @media not all and (max-width: $width) {
+    @content;
+  }
+}
+
+@mixin prefers-dark() {
+  @media (prefers-color-scheme: dark) {
+    @content;
+  }
+}
+
+@mixin prefers-light() {
+  @media (prefers-color-scheme: light) {
+    @content;
+  }
+}
+
+@mixin portrait() {
+  @media (orientation: portrait) {
+    @content;
+  }
+}
+
+@mixin landscape() {
+  @media (orientation: landscape) {
+    @content;
+  }
+}
+
+@mixin motion-reduced() {
+  @media (prefers-reduced-motion) {
+    @content;
+  }
+}
+
+@mixin motion-safe() {
+  @media (prefers-reduced-motion: no-preference) {
+    @content;
+  }
+}
+
+@mixin contrast-high() {
+  @media (prefers-contrast: more) {
+    @content;
+  }
+}
+
+@mixin contrast-low() {
+  @media (prefers-contrast: less) {
+    @content;
+  }
+}
+
+@mixin contrast-default() {
+  @media (prefers-contrast: no-preference) {
+    @content;
+  }
+}
+
+@mixin contrast-custom() {
+  @media (prefers-contrast: custom) {
+    @content;
+  }
+}
+
+@mixin inverted-colors() {
+  @media (inverted-colors: inverted) {
+    @content;
+  }
+}
+
+@mixin fullscreen() {
+  @media (display-mode: fullscreen) {
+    @content;
+  }
+}
+
+@mixin standalone() {
+  @media (display-mode: standalone) {
+    @content;
+  }
+}
+
+@mixin minimal() {
+  @media (display-mode: minimal-ui) {
+    @content;
+  }
+}
+
+@mixin browser() {
+  @media (display-mode: browser) {
+    @content;
+  }
+}
+
+@mixin application() {
+  @media (display-mode: window-controls-overlay) {
+    @content;
+  }
+}
+
+@mixin slow-update() {
+  @media (update: slow) {
+    @content;
+  }
+}
+
+@mixin input-hovers() {
+  @media (hover: hover) {
+    @content;
+  }
+}
+
+@mixin any-input-hovers() {
+  @media (any-hover: hover) {
+    @content;
+  }
+}
+
+@mixin touch() {
+  @media not (pointer: course), not (pointer: fine) {
+    @content;
+  }
+}
+
+@mixin mouse() {
+  @media (pointer: course) or (pointer: fine) {
+    @content;
+  }
+}
+
+@mixin noscript() {
+  @media not (scripting: enabled) {
+    @content;
+  }
+}

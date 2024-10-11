@@ -1,0 +1,79 @@
+@use 'data';
+@use 'sass:map';
+@use 'sass:meta';
+
+@forward 'data';
+
+$map: meta.module-variables('data');
+
+@function preset($ratio) {
+  @return map.get($map, $ratio);
+}
+
+@function minor-second() {
+  @return data.$minor-second;
+}
+
+@function major-second() {
+  @return data.$major-second;
+}
+
+@function minor-third() {
+  @return data.$minor-third;
+}
+
+@function major-third() {
+  @return data.$major-third;
+}
+
+@function perfect-fourth() {
+  @return data.$perfect-fourth;
+}
+
+@function augmented-fourth() {
+  @return data.$augmented-fourth;
+}
+
+@function perfect-fifth() {
+  @return data.$perfect-fifth;
+}
+
+@function minor-sixth() {
+  @return data.$minor-sixth;
+}
+
+@function golden() {
+  @return data.$golden;
+}
+
+@function major-sixth() {
+  @return data.$major-sixth;
+}
+
+@function minor-seventh() {
+  @return data.$minor-seventh;
+}
+
+@function major-seventh() {
+  @return data.$major-seventh;
+}
+
+@function octave() {
+  @return data.$octave;
+}
+
+@function major-tenth() {
+  @return data.$major-tenth;
+}
+
+@function major-eleventh() {
+  @return data.$major-eleventh;
+}
+
+@function major-twelfth() {
+  @return data.$major-twelfth;
+}
+
+@function double-octave() {
+  @return data.$double-octave;
+}

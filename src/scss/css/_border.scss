@@ -1,0 +1,43 @@
+@mixin border-x-width($size) {
+  border-left-width: $size;
+  border-right-width: $size;
+}
+
+@mixin border-y-width($size) {
+  border-top-width: $size;
+  border-bottom-width: $size;
+}
+
+@mixin border-out() {
+  background-clip: content-box;
+}
+
+@mixin border-expand($values) {
+  @include border-width($values);
+
+  box-sizing: content-box;
+
+  border-style: solid;
+  border-color: transparent;
+}
+
+@mixin border-expand-x($expansion) {
+  @include border-expand(0 $expansion);
+}
+
+@mixin border-expand-y($expansion) {
+  @include border-expand($expansion 0);
+}
+
+@mixin border-radius-end($end, $radius) {
+  border-#{$end}-left-radius: $radius;
+  border-#{$end}-right-radius: $radius;
+}
+
+@mixin border-highlight-edge($opacity: 0.3) {
+  border-color: rgba(white, $opacity);
+}
+
+@mixin border-tint-edge($opacity: 0.3) {
+  border-color: rgba(black, $opacity);
+}
